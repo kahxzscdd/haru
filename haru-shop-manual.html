@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>คู่มือใช้งาน Haru Shop v1.9.1 (ฉบับมือใหม่)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --accent:#1fdd78;
+  --accent-dim:rgba(31,221,120,.12);
+  --accent-dim2:rgba(31,221,120,.28);
+  --bg:#0a0c0f;
+  --bg-elev:#101318;
+  --card:#12161c;
+  --card2:#161b22;
+  --border:#232a33;
+  --border-soft:#1b212a;
+  --text:#e8ecf1;
+  --text-dim:#9aa4b2;
+  --text-dim2:#6b7484;
+  --warn:#f5a524;
+  --warn-dim:rgba(245,165,36,.1);
+  --danger:#e5484d;
+  --danger-dim:rgba(229,72,77,.12);
+  --radius:14px;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0; background:var(--bg); color:var(--text);
+  font-family:'Noto Sans Thai','Kanit',sans-serif; line-height:1.75; font-size:15.5px;
+}
+a{color:var(--accent); text-decoration:none;}
+a:hover{text-decoration:underline;}
+img{max-width:100%; border-radius:10px; border:1px solid var(--border); display:block;}
+
+/* ---------- top hero bar ---------- */
+.hero{
+  padding:26px 26px 22px; border-bottom:1px solid var(--border-soft);
+  background:linear-gradient(180deg, rgba(31,221,120,.06), transparent 70%);
+  display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;
+  position:sticky; top:0; z-index:40; backdrop-filter:blur(10px); background-color:rgba(10,12,15,.85);
+}
+.hero-left{display:flex; align-items:center; gap:12px;}
+.logo{
+  width:42px;height:42px;border-radius:12px;
+  background:linear-gradient(160deg,var(--accent),#0fae57);
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;color:#04160c;font-size:20px; flex:0 0 auto;
+}
+.hero h1{margin:0; font-size:19px; font-weight:600;}
+.hero p{margin:2px 0 0; color:var(--text-dim); font-size:12.5px;}
+.hero-actions{display:flex; gap:10px; flex-wrap:wrap;}
+.btn{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:11px 18px; border-radius:10px; font-size:13.5px; font-weight:600;
+  cursor:pointer; border:1px solid var(--border); transition:.15s;
+}
+.btn:hover{text-decoration:none;}
+.btn-primary{background:var(--accent); color:#04160c; border-color:var(--accent);}
+.btn-primary:hover{filter:brightness(1.08);}
+.btn-ghost{background:var(--card); color:var(--text);}
+.btn-ghost:hover{background:var(--card2);}
+
+.layout{display:flex; align-items:flex-start; max-width:1280px; margin:0 auto;}
+
+/* ---------- sidebar toc ---------- */
+.toc{
+  width:270px; flex:0 0 270px; padding:24px 18px; position:sticky; top:88px;
+  max-height:calc(100vh - 100px); overflow-y:auto;
+}
+.toc-title{font-size:11.5px; text-transform:uppercase; letter-spacing:.06em; color:var(--text-dim2); margin:0 0 10px 8px; font-weight:600;}
+.toc a{
+  display:flex; align-items:center; gap:10px; padding:9px 10px; border-radius:9px;
+  color:var(--text-dim); font-size:13.5px; margin-bottom:2px; transition:.15s;
+}
+.toc a:hover{background:var(--card2); color:var(--text); text-decoration:none;}
+.toc a.num{
+  width:22px;height:22px;border-radius:7px;background:var(--card); border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center; font-size:11px; color:var(--text-dim); flex:0 0 auto;
+}
+@media(max-width:960px){ .toc{display:none;} }
+
+/* ---------- main content ---------- */
+.content{flex:1; min-width:0; padding:30px 30px 100px;}
+@media(max-width:640px){ .content{padding:20px 16px 80px;} .hero{padding:18px 16px;} }
+
+section{margin-bottom:52px; scroll-margin-top:96px;}
+.eyebrow{
+  display:inline-flex; align-items:center; gap:8px; background:var(--accent-dim); color:var(--accent);
+  border:1px solid var(--accent-dim2); padding:4px 12px; border-radius:999px; font-size:11.5px; font-weight:600; margin-bottom:10px;
+}
+h2{font-size:23px; margin:0 0 6px; display:flex; align-items:center; gap:10px;}
+.section-sub{color:var(--text-dim); font-size:14px; margin:0 0 22px;}
+h3{font-size:16.5px; margin:26px 0 10px;}
+
+.card{
+  background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px 22px; margin-bottom:16px;
+}
+
+.steps{list-style:none; margin:0; padding:0; counter-reset:step;}
+.steps li{
+  counter-increment:step; position:relative; padding:2px 0 20px 42px; margin-bottom:2px;
+}
+.steps li::before{
+  content:counter(step); position:absolute; left:0; top:0; width:30px; height:30px; border-radius:9px;
+  background:var(--accent-dim); color:var(--accent); border:1px solid var(--accent-dim2);
+  display:flex; align-items:center; justify-content:center; font-weight:700; font-size:13.5px;
+}
+.steps li::after{
+  content:''; position:absolute; left:15px; top:32px; bottom:0; width:1px; background:var(--border-soft);
+}
+.steps li:last-child::after{display:none;}
+.steps li b{color:var(--text);}
+
+.tip, .warn, .danger{
+  border-radius:11px; padding:14px 16px; margin:16px 0; font-size:13.8px; display:flex; gap:10px;
+}
+.tip{background:var(--accent-dim); border:1px solid var(--accent-dim2); color:#bdf5d6;}
+.warn{background:var(--warn-dim); border:1px solid rgba(245,165,36,.35); color:#f0cd8f;}
+.danger{background:var(--danger-dim); border:1px solid rgba(229,72,77,.35); color:#f3b1b3;}
+.tip .ic, .warn .ic, .danger .ic{flex:0 0 auto; font-size:17px;}
+.tip b, .warn b, .danger b{color:#fff;}
+
+.shot{margin:16px 0;}
+.shot .cap{font-size:12px; color:var(--text-dim2); margin-top:8px; text-align:center;}
+
+.grid2{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+@media(max-width:720px){.grid2{grid-template-columns:1fr;}}
+
+.mini-link{
+  display:inline-flex; align-items:center; gap:6px; font-size:12.5px; font-weight:600;
+  background:var(--card2); border:1px solid var(--border); padding:8px 13px; border-radius:9px; margin-top:6px; color:var(--accent);
+}
+.mini-link:hover{background:var(--accent-dim); text-decoration:none;}
+
+table{width:100%; border-collapse:collapse; font-size:13.5px; margin:14px 0;}
+th,td{border:1px solid var(--border); padding:9px 12px; text-align:left; vertical-align:top;}
+th{background:var(--card2); color:var(--text-dim); font-weight:600; font-size:12.5px;}
+td b{color:var(--text);}
+
+.faq-item{border-bottom:1px solid var(--border-soft); padding:16px 0;}
+.faq-item:last-child{border-bottom:none;}
+.faq-q{font-weight:600; font-size:14.5px; display:flex; gap:8px; margin-bottom:6px;}
+.faq-a{color:var(--text-dim); font-size:13.8px;}
+
+.kbd{
+  background:var(--card2); border:1px solid var(--border); border-bottom-width:2px; border-radius:6px;
+  padding:1px 7px; font-size:12.5px; color:var(--text);
+}
+
+.glossary{display:grid; grid-template-columns:1fr; gap:10px;}
+.gl-item{display:flex; gap:12px; padding:10px 0; border-top:1px solid var(--border-soft);}
+.gl-item:first-child{border-top:none;}
+.gl-term{flex:0 0 150px; font-weight:600; color:var(--accent); font-size:13.5px;}
+.gl-def{color:var(--text-dim); font-size:13.5px;}
+@media(max-width:560px){.gl-item{flex-direction:column; gap:2px;} .gl-term{flex:none;}}
+
+.top-disclaimer{
+  margin:0 26px 0; padding:12px 16px; border-radius:11px; border:1px dashed var(--border);
+  color:var(--text-dim2); font-size:12px; line-height:1.6; max-width:1280px; margin-left:auto; margin-right:auto;
+}
+footer{text-align:center; padding:30px 20px; color:var(--text-dim2); font-size:12px; border-top:1px solid var(--border-soft); margin-top:30px;}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-left">
+    <div class="logo">H</div>
+    <div>
+      <h1>คู่มือใช้งาน Haru Shop <span style="color:var(--accent);font-weight:400;font-size:14px;">v1.9.1</span></h1>
+      <p>เขียนแบบละเอียด อ่านง่าย เหมาะสำหรับคนที่ไม่เคยใช้โปรแกรมนี้มาก่อน หรือใช้คอมยังไม่คล่อง</p>
+    </div>
+  </div>
+  <div class="hero-actions">
+    <a class="btn btn-primary" href="haru-shop-mock-ui.html" target="_blank">🖥 เปิดหน้าจอจำลอง (กดลองได้จริง)</a>
+    <a class="btn btn-ghost" href="#start">▾ เริ่มอ่านคู่มือ</a>
+  </div>
+</div>
+
+<div class="top-disclaimer">
+  ⚠ คู่มือและหน้าจอจำลองนี้จัดทำขึ้นเพื่อการอธิบายวิธีใช้งานเท่านั้น หน้า "หน้าจอจำลอง" ที่ลิงก์ไว้ด้านบนเป็น Mock UI ไม่ใช่โปรแกรมจริง กดได้เพื่อสาธิตหน้าตาเฉยๆ ไม่มีการเชื่อมต่อเกม/อีมูเลเตอร์/เซิร์ฟเวอร์ใดๆ
+</div>
+
+<div class="layout">
+  <!-- ================= TOC ================= -->
+  <nav class="toc">
+    <div class="toc-title">สารบัญ</div>
+    <a href="#start"><span class="num">1</span> ก่อนเริ่มต้องมีอะไรบ้าง</a>
+    <a href="#open"><span class="num">2</span> เปิดโปรแกรมครั้งแรก + ใส่คีย์</a>
+    <a href="#devices"><span class="num">3</span> หน้า "จอ" — เชื่อมต่ออุปกรณ์</a>
+    <a href="#tasks"><span class="num">4</span> หน้า "งาน" — ให้บอททำอะไร</a>
+    <a href="#boost"><span class="num">5</span> หน้า "บูสต์ & การเล่น"</a>
+    <a href="#gacha"><span class="num">6</span> หน้า "สมบัติ"</a>
+    <a href="#overview"><span class="num">7</span> หน้า "ภาพรวม" + ตั้งเวลา</a>
+    <a href="#settings"><span class="num">8</span> หน้า "ตั้งค่า" + แจ้งเตือน Discord</a>
+    <a href="#theme"><span class="num">9</span> เปลี่ยนธีม/สี</a>
+    <a href="#key"><span class="num">10</span> คีย์ของฉัน / ย้ายเครื่อง</a>
+    <a href="#glossary"><span class="num">11</span> ศัพท์ที่ควรรู้</a>
+    <a href="#faq"><span class="num">12</span> คำถามที่พบบ่อย</a>
+    <a href="#warning"><span class="num">13</span> ข้อควรระวัง</a>
+  </nav>
+
+  <!-- ================= CONTENT ================= -->
+  <div class="content">
+
+    <section id="start">
+      <div class="eyebrow">🟢 เริ่มต้น</div>
+      <h2>1. ก่อนเริ่มต้องมีอะไรบ้าง</h2>
+      <p class="section-sub">อ่านหัวข้อนี้ก่อน จะได้ไม่งงว่าต้องเตรียมอะไรก่อนเปิดโปรแกรม</p>
+
+      <div class="card">
+        <ol class="steps">
+          <li><b>คอมพิวเตอร์ที่เปิดได้ตลอด</b> — เพราะบอทต้องรันอยู่เบื้องหลังระหว่างที่เราไม่ได้อยู่หน้าจอ ถ้าปิดคอมหรือคอมหลับ บอทจะหยุดทำงานทันที</li>
+          <li><b>โปรแกรมจำลองมือถือ (Emulator)</b> เช่น <b>MuMu Player</b> หรือ <b>LDPlayer</b> — ใช้แทนมือถือจริงเพื่อรันเกม Cookie Run Classic บนคอม ถ้ายังไม่มีให้โหลดและติดตั้งให้เรียบร้อยก่อน แล้วติดตั้งเกม Cookie Run Classic ลงในอีมูเลเตอร์นั้นให้เสร็จ เข้าเกมได้ปกติอย่างน้อย 1 ครั้ง</li>
+          <li><b>ตัวโปรแกรม Haru Shop</b> — ไฟล์ที่ผู้ขาย/ผู้ให้บริการส่งมาให้ (เช่น <span class="kbd">CookieBot.exe</span>)</li>
+          <li><b>คีย์ใช้งาน (License Key)</b> — รหัสที่ได้รับตอนซื้อ/สมัครใช้งาน รูปแบบประมาณ <span class="kbd">HARU-XXXX-XXXX-XXXX</span></li>
+        </ol>
+        <div class="tip"><span class="ic">💡</span><div>ถ้ายังไม่มีอีมูเลเตอร์หรือยังไม่ได้ติดตั้งเกม ให้ทำส่วนนี้ให้เสร็จก่อน แล้วค่อยกลับมาเปิดโปรแกรม Haru Shop จะได้ไม่งงหลายขั้นตอนพร้อมกัน</div></div>
+      </div>
+    </section>
+
+    <section id="open">
+      <div class="eyebrow">🚀 ขั้นตอนที่ 2</div>
+      <h2>2. เปิดโปรแกรมครั้งแรก และใส่คีย์</h2>
+      <p class="section-sub">ทำตามลำดับนี้ในการเปิดใช้งานครั้งแรก</p>
+
+      <div class="card">
+        <ol class="steps">
+          <li>เปิดอีมูเลเตอร์ (MuMu หรือ LD) ขึ้นมาก่อน แล้วเข้าเกม Cookie Run Classic ให้ถึงหน้าล็อบบี้ (หน้าหลักในเกม)</li>
+          <li>ดับเบิลคลิกไฟล์โปรแกรม Haru Shop เพื่อเปิดขึ้นมา — จะเห็นหน้าจอสีเข้ม มีโลโก้ <b>H</b> สีเขียวมุมซ้ายบน</li>
+          <li>ถ้าเป็นการเปิดครั้งแรก โปรแกรมจะถามหาคีย์ ให้พิมพ์หรือวางคีย์ที่ได้รับมาลงไปในช่อง แล้วกดยืนยัน</li>
+          <li>เมื่อใส่คีย์ถูกต้อง ที่มุมซ้ายบนจะขึ้นป้ายสีเขียวบอกจำนวนวันที่เหลือ เช่น <b>"8 วัน · หมด 13/08/26"</b> แปลว่าใช้งานได้ต่ออีก 8 วัน</li>
+        </ol>
+        <div class="warn"><span class="ic">⚠</span><div><b>สำคัญ:</b> คีย์ 1 อันผูกกับคอม 1 เครื่อง ห้ามเอาไปใส่คอมเครื่องอื่นพร้อมกัน ถ้าจะเปลี่ยนเครื่องให้ไปที่เมนู "คีย์ของฉัน" (อธิบายในหัวข้อที่ 10)</div></div>
+      </div>
+    </section>
+
+    <section id="devices">
+      <div class="eyebrow">🖥 ขั้นตอนที่ 3</div>
+      <h2>3. หน้า "จอ" — เชื่อมต่ออุปกรณ์</h2>
+      <p class="section-sub">หน้านี้คือจุดแรกที่ต้องตั้งค่า เพราะบอทต้องรู้ก่อนว่าจะไปควบคุมอีมูเลเตอร์ตัวไหน</p>
+
+      <div class="card">
+        <h3>วิธีเชื่อมต่อ</h3>
+        <ol class="steps">
+          <li>ที่แถบเมนูซ้ายมือของโปรแกรม กดไอคอนรูปจอคอมพิวเตอร์ (หน้า <b>"จอ"</b>)</li>
+          <li>เลือกชนิดอีมูเลเตอร์ที่ใช้ โดยกดปุ่ม <b>"MuMu"</b> หรือ <b>"LD"</b> ให้ตรงกับที่ติดตั้งไว้ในคอม</li>
+          <li>กดปุ่ม <b>"เลือกจอ..."</b> จะมีหน้าต่างเด้งขึ้นมา แสดงรายชื่ออีมูเลเตอร์ทั้งหมดที่เปิดอยู่ในคอม (เช่น test1, test2)</li>
+          <li>ติ๊กเลือกอีมูเลเตอร์ที่ต้องการให้บอทเล่น (เลือกได้มากกว่า 1 ตัวถ้าเปิดอีมูเลเตอร์ไว้หลายตัว) แล้วกด <b>"✓ ใช้ที่เลือก"</b></li>
+          <li>ถ้าไม่เจออีมูเลเตอร์ในลิสต์ ให้กดปุ่ม <b>"Refresh"</b> เพื่อให้โปรแกรมค้นหาใหม่ (ต้องเปิดอีมูเลเตอร์ทิ้งไว้ก่อนถึงจะเจอ)</li>
+        </ol>
+        <div class="shot">
+          <img src="images/12.png" alt="หน้าต่างเลือกอุปกรณ์">
+          <div class="cap">ตัวอย่าง: หน้าต่างเลือกอุปกรณ์ ติ๊กเลือกจอที่ต้องการแล้วกดใช้ที่เลือก</div>
+        </div>
+        <a class="mini-link" href="haru-shop-mock-ui.html?page=devices" target="_blank">🖱 ลองกดหน้านี้ในหน้าจอจำลอง →</a>
+      </div>
+
+      <div class="card">
+        <h3>ตั้งค่าแยกแต่ละจอ (ถ้าเปิดหลายจอพร้อมกัน)</h3>
+        <p>ถ้าเปิดเล่นหลายอีมูเลเตอร์พร้อมกัน ปกติทุกจอจะใช้ค่าตั้งค่าชุดเดียวกัน (ค่ากลาง) แต่ถ้าอยากให้แต่ละจอทำงานไม่เหมือนกัน เช่น จอ 1 เก็บเหรียญ จอ 2 ฟาร์มกล่อง ให้เปิดสวิตช์ <b>"ใช้ค่ารายจอ"</b> ที่ด้านบนของหน้านี้ แล้วคลิกเลือกจอในรายการทางซ้าย จากนั้นตั้งค่าที่ต้องการให้จอนั้นๆ แยกกันได้เลย</p>
+        <div class="tip"><span class="ic">💡</span><div>จอที่ <b>กำลังเล่นอยู่</b> จะแก้ค่าไม่ได้ ต้องกด <b>"หยุดจอนี้"</b> ก่อนถึงจะแก้ไขได้</div></div>
+        <div class="shot">
+          <img src="images/13.png" alt="หน้าต่างตั้งค่าจอทำงานต่างกัน">
+          <div class="cap">ตัวอย่าง: ติ๊กเลือกจอทำงานต่างกัน</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="tasks">
+      <div class="eyebrow">🏃 ขั้นตอนที่ 4</div>
+      <h2>4. หน้า "งาน" — เลือกให้บอททำอะไร</h2>
+      <p class="section-sub">หน้านี้แบ่งเป็น 4 แท็บย่อย: วิ่ง, เพื่อน, หัวใจ, ของขวัญ</p>
+
+      <div class="card">
+        <h3>🏃 แท็บ "วิ่ง" (โหมดหลัก — ใช้บ่อยที่สุด)</h3>
+        <p>เป็นโหมดที่ต้องเลือกก่อนกด <b>Start</b> เสมอ มีให้เลือก 4 แบบ:</p>
+        <table>
+          <tr><th>โหมด</th><th>ใช้ทำอะไร</th></tr>
+          <tr><td><b>🪙 เก็บเหรียญ (ปกติ)</b></td><td>วิ่งจนจบด่านทุกครั้ง เก็บเหรียญและคะแนนเต็มรอบ เหมาะกับการฟาร์มเหรียญทั่วไป</td></tr>
+          <tr><td><b>🎉 Party Run รายวัน</b></td><td>เข้าโหมด Solo Race เพื่อเก็บภารกิจประจำวันโดยเฉพาะ</td></tr>
+          <tr><td><b>🎁 ฟาร์มกล่อง</b></td><td>กระโดดน้อย เน้นเก็บกล่องของรางวัลในด่านให้ครบแล้วออกจากด่านทันที ไม่ต้องวิ่งจนจบ</td></tr>
+          <tr><td><b>✖ เกาะเหรียญ</b></td><td>ด่านพิเศษ ต้องเข้าไปตั้งค่าด่านเองในเกมก่อน 1 ครั้ง แล้วบอทจะวิ่งด่านนี้ซ้ำๆ</td></tr>
+        </table>
+        <ol class="steps">
+          <li>คลิกเลือกโหมดที่ต้องการ (การ์ดที่เลือกจะมีกรอบสีเขียว)</li>
+          <li>ตั้งค่าย่อยด้านล่าง เช่น <b>"พักหัวใจ"</b> (ให้บอทหยุดวิ่งไปส่งหัวใจเพื่อนเป็นระยะ) และ <b>"เก็บกี่กล่องแล้วออก"</b> (เฉพาะโหมดฟาร์มกล่อง)</li>
+          <li>กลับไปที่ปุ่มสีแดงด้านบนสุดของโปรแกรม แล้วกด <b>"Start bot"</b> เพื่อเริ่มทำงาน</li>
+        </ol>
+        <div class="shot">
+          <img src="images/14.png" alt="เมนูในการวิ่ง">
+          <div class="cap">ตัวอย่าง: เมนูในการวิ่ง</div>
+        </div>
+      </div>
+
+      <div class="grid2">
+        <div class="card">
+          <h3>👥 แท็บ "เพื่อน"</h3>
+          <p><b>Add Friends</b> — เปิดสวิตช์แล้วบอทจะส่งคำขอเป็นเพื่อนอัตโนมัติทันที ไม่ต้องกด Start</p>
+          <p><b>ลบเพื่อนเวลาต่ำ</b> — ไล่ลบเพื่อนที่ไม่ค่อยเล่น (เวลาน้อย) ออกจากลิสต์ ตั้งได้ว่าจะลบตั้งแต่เวลาเท่าไร</p>
+          <div class="danger"><span class="ic">⛔</span><div>การลบเพื่อน <b>กู้คืนไม่ได้</b> ตรวจสอบตัวเลขให้แน่ใจก่อนเปิดใช้งาน</div></div>
+          <div class="shot">
+            <img src="images/15.png" alt="tab เพื่อน">
+            <div class="cap">ตัวอย่าง: tab เพื่อน</div>
+          </div>
+        </div>
+        <div class="card">
+          <h3>💗 แท็บ "หัวใจ"</h3>
+          <p><b>รับหัวใจ & ส่งหัวใจ</b> — เปิดสวิตช์เดียว บอทจะรับหัวใจจากเพื่อนทั้งหมดแล้วส่งหัวใจกลับให้ในรอบเดียว</p>
+          <p>ทั้งสองงานนี้ทำเสร็จแล้วสวิตช์จะ <b>ปิดเองอัตโนมัติ</b> ไม่ต้องมาปิดเอง</p>
+          <div class="shot">
+            <img src="images/17.png" alt="tab หัวใจ">
+            <div class="cap">ตัวอย่าง: tab หัวใจ</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>🎁 แท็บ "ของขวัญ"</h3>
+        <p><b>เปิดของขวัญ (Gift Draw)</b> — เปิดกล่องของขวัญที่ได้รับให้อัตโนมัติ</p>
+        <p><b>รับรางวัลภารกิจ</b> — ไปหน้าภารกิจแล้วกดรับรางวัลทุกอันที่ทำครบเงื่อนไขแล้ว ทั้งภารกิจของด่านและภารกิจทั่วไป</p>
+        <div class="warn"><span class="ic">⚠</span><div>งานในแท็บ เพื่อน/หัวใจ/ของขวัญ ทั้งหมด <b>ต้องอยู่ที่หน้าล็อบบี้เกม</b> ก่อนเปิดสวิตช์ ไม่งั้นบอทจะทำงานผิดหน้าได้</div></div>
+        <a class="mini-link" href="haru-shop-mock-ui.html?page=tasks" target="_blank">🖱 ลองกดหน้านี้ในหน้าจอจำลอง →</a>
+      </div>
+    </section>
+
+    <section id="boost">
+      <div class="eyebrow">🎯 ขั้นตอนที่ 5</div>
+      <h2>5. หน้า "บูสต์ & การเล่น"</h2>
+      <p class="section-sub">แบ่งเป็น 3 แท็บย่อย: บูสต์ (Multi-Buy), ฟีเจอร์เสริม, ตั้งค่ากระโดด</p>
+
+      <div class="card">
+        <h3>🪙 แท็บ "บูสต์ (Multi-Buy)"</h3>
+        <p>คือรายการบูสต์ที่จะให้บอทซื้อ/เปิดใช้ก่อนเริ่มวิ่งทุกรอบ เช่น Double Coins, Revive once, Magnetic Aura</p>
+        <p>วิธีใช้: คลิกที่การ์ดของบูสต์ที่ต้องการ (เลือกได้หลายอันพร้อมกัน) การ์ดที่เลือกจะมีเครื่องหมายถูกและกรอบสีเขียว จำนวนที่เลือกจะขึ้นที่มุมขวาบน</p>
+        <div class="shot">
+            <img src="images/18.png" alt="tab บูสต์ (Multi-Buy)">
+            <div class="cap">ตัวอย่าง: tab บูสต์ (Multi-Buy)</div>
+          </div>
+      </div>
+
+      <div class="grid2">
+        <div class="card">
+          <h3>✨ แท็บ "ฟีเจอร์เสริม"</h3>
+          <p><b>เก็บ Relic อัตโนมัติ</b> — เจอไอเทมที่ต้องสุ่มในล็อบบี้ก็เก็บให้ก่อนเริ่มเกม</p>
+          <p><b>บูสต์เข้าเกม</b> — เลือกได้ว่าจะใช้ Potion, Stopwatch หรือ Star x2 อัตโนมัติก่อนเริ่มด่าน</p>
+          <p><b>Fast Start / นินจา-ต่อชีพ</b> — ให้บอทกดปุ่มพุ่งตัวตอนเริ่ม และกดต่อชีพให้ทันทีถ้าคุกกี้ตาย มีช่องตั้ง "รอกี่วินาทีก่อนกด" เพื่อให้ดูเป็นธรรมชาติมากขึ้น</p>
+          <div class="shot">
+            <img src="images/19.png" alt="tab Relic">
+            <div class="cap">ตัวอย่าง: tab Relic</div>
+          </div>
+        </div>
+        <div class="card">
+          <h3>⚙ แท็บ "ตั้งค่ากระโดด"</h3>
+          <p>เป็นส่วนตั้งค่าจังหวะการกดกระโดด/สไลด์ให้สุ่มเวลาเล็กน้อยในทุกครั้ง แทนที่จะกดจังหวะเดิมซ้ำๆ ตลอด</p>
+          <p>ปรับตัวเลขได้ทีละช่อง เช่น ระยะเวลาสไลด์ค้าง จากนั้นกด <b>"✓ บันทึกอัตโนมัติ"</b> เพื่อเก็บค่าไว้ใช้ครั้งต่อไป</p>
+        </div>
+      </div>
+      <a class="mini-link" href="haru-shop-mock-ui.html?page=boost" target="_blank">🖱 ลองกดหน้านี้ในหน้าจอจำลอง →</a>
+    </section>
+
+    <section id="gacha">
+      <div class="eyebrow">💎 ขั้นตอนที่ 6</div>
+      <h2>6. หน้า "สมบัติ"</h2>
+      <p class="section-sub">ระบบสุ่มกล่องสมบัติและบดของเก่าทิ้งอัตโนมัติ</p>
+
+      <div class="card">
+        <ol class="steps">
+          <li>ก่อนใช้ครั้งแรก แนะนำให้เข้าเกมแล้วกดติดดาว ⭐ ให้สมบัติชิ้นที่รักไว้ก่อน เพราะชิ้นที่ติดดาวแล้วบอทจะไม่แตะเด็ดขาด</li>
+          <li>เข้าหน้า "สมบัติ" แล้วเลือกโหมด: <b>"สุ่มจนเต็ม~บด"</b> (สุ่มกล่องจนเงินหมดหรือช่องเต็ม แล้วบดของที่แย่ที่สุดทิ้งเป็นผง) หรือ <b>"อัพเกรด +9"</b></li>
+          <li>เปิดสวิตช์ที่การ์ด "ระบบสมบัติ" — บอทจะทำงานจนเสร็จแล้วสวิตช์จะปิดเองและพากลับไปหน้าล็อบบี้ให้</li>
+        </ol>
+        <div class="tip"><span class="ic">💡</span><div>มีสวิตช์ <b>"กันคุกกี้ชือชีพ"</b> และ <b>"กัน Vita"</b> ให้เปิดไว้เผื่อไม่อยากให้บอทบดไอเทมสำคัญ 2 ชนิดนี้โดยไม่ตั้งใจ</div></div>
+        <a class="mini-link" href="haru-shop-mock-ui.html?page=gacha" target="_blank">🖱 ลองกดหน้านี้ในหน้าจอจำลอง →</a>
+      </div>
+    </section>
+
+    <section id="overview">
+      <div class="eyebrow">📊 ขั้นตอนที่ 7</div>
+      <h2>7. หน้า "ภาพรวม" และการตั้งเวลาเปิด-ปิด</h2>
+      <p class="section-sub">ใช้ดูสถานะรวมของทุกจอในที่เดียว และตั้งให้บอททำงานอัตโนมัติแบบไม่ต้องเฝ้า</p>
+
+      <div class="card">
+        <h3>สิ่งที่เห็นในหน้านี้</h3>
+        <div class="glossary">
+          <div class="gl-item"><div class="gl-term">ออนไลน์ / กำลังเล่น</div><div class="gl-def">จำนวนจอที่เชื่อมต่อได้และกำลังทำงานอยู่จริง</div></div>
+          <div class="gl-item"><div class="gl-term">ระบบพักอัตโนมัติ</div><div class="gl-def">ให้บอทเล่นเป็นช่วงๆ แล้วพักสุ่มเวลาเหมือนคนเล่นจริง แทนที่จะเล่นรัวติดกันตลอด 24 ชั่วโมง ตั้งได้ว่าเล่นกี่นาที พักกี่นาที และช่วงพักให้ไปทำอะไรแทน (เช่น ส่งหัวใจ)</div></div>
+          <div class="gl-item"><div class="gl-term">Connection lost ค้าง = รีเกมให้เอง</div><div class="gl-def">ถ้าเน็ตหลุดจนเกมค้าง โปรแกรมจะปิดเกมแล้วเปิดใหม่ให้เองโดยอัตโนมัติ ไม่ต้องมานั่งเฝ้า</div></div>
+          <div class="gl-item"><div class="gl-term">ตั้งเวลาเปิด-ปิดบอท</div><div class="gl-def">กำหนดเวลาที่ให้บอทเริ่มทำงานเองและหยุดทำงานเองในแต่ละวัน เช่น เริ่ม 05:00 หยุด 22:00</div></div>
+          <div class="gl-item"><div class="gl-term">เหตุการณ์ล่าสุด</div><div class="gl-def">บันทึกย่อของสิ่งที่บอทเพิ่งทำ อัปเดตแบบสดๆ รวมทุกจอในที่เดียว</div></div>
+        </div>
+        <a class="mini-link" href="haru-shop-mock-ui.html?page=overview" target="_blank">🖱 ลองกดหน้านี้ในหน้าจอจำลอง →</a>
+      </div>
+    </section>
+
+    <section id="settings">
+      <div class="eyebrow">⚙ ขั้นตอนที่ 8</div>
+      <h2>8. หน้า "ตั้งค่า" และแจ้งเตือนผ่าน Discord</h2>
+      <p class="section-sub">ตั้งค่าที่ใช้ร่วมกันทั้งโปรแกรม ไม่ผูกกับจอใดจอหนึ่ง</p>
+
+      <div class="card">
+        <h3>ตั้งแจ้งเตือนเข้า Discord (ดูสถานะบอทจากมือถือได้)</h3>
+        <p>ฟีเจอร์นี้จะส่งข้อความแจ้งเตือนเข้าห้อง Discord ของเรา ทำให้ไม่ต้องเปิดคอมเฝ้าจอตลอดเวลา</p>
+        <ol class="steps">
+          <li>เปิด Discord แล้วสร้าง <b>Webhook</b> ในห้องที่ต้องการรับแจ้งเตือน (ทำในแอป Discord: ตั้งค่าห้อง → Integrations → Webhooks → New Webhook → คัดลอกลิงก์)</li>
+          <li>กลับมาที่โปรแกรม วางลิงก์ Webhook ที่คัดลอกมาลงในช่อง <b>"Webhook URL"</b></li>
+          <li>กดปุ่ม <b>"ทดสอบส่ง"</b> เพื่อเช็คว่าตั้งค่าถูกต้อง ถ้าถูกต้องจะมีข้อความทดสอบเด้งเข้า Discord ทันที</li>
+          <li>ติ๊กเลือกว่าต้องการให้แจ้งเตือนเรื่องอะไรบ้าง เช่น เหตุด่วน (จอหลุด/บอทหยุด), จบทุกด่าน, สรุปตามรอบ</li>
+          <li>ตั้ง <b>"เงียบเกิน"</b> ไว้ว่าถ้าบอทไม่ส่งอะไรเกินกี่นาทีให้แจ้งเตือนว่าผิดปกติ และตั้ง <b>"สรุปทุก"</b> ไว้ว่าอยากได้สรุปผลรวมทุกกี่ชั่วโมง</li>
+        </ol>
+        <div class="tip"><span class="ic">💡</span><div>ถ้าไม่รู้วิธีสร้าง Webhook ให้ลองค้นหาคำว่า "วิธีสร้าง Discord Webhook" ในเว็บ หรือถามแอดมินร้านที่ให้โปรแกรมมา</div></div>
+      </div>
+
+      <div class="grid2">
+        <div class="card">
+          <h3>↻ เวอร์ชัน & อัพเดท</h3>
+          <p>เปิดสวิตช์ <b>"เช็คอัพเดทอัตโนมัติ"</b> ไว้ โปรแกรมจะเช็คเวอร์ชันใหม่ให้เองตอนเปิดโปรแกรมและทุก 6 ชั่วโมง ถ้ามีเวอร์ชันใหม่จะขึ้นแจ้งเตือนให้กดอัพเดท</p>
+        </div>
+        <div class="card">
+          <h3>🖥 เครื่องนี้</h3>
+          <p>สวิตช์ <b>"กันคอมหลับตอนบอทรัน"</b> — แนะนำให้เปิดไว้เสมอ เพราะถ้าคอมเข้าโหมดพักหน้าจอ/หลับ บอทจะหยุดทำงานทันทีโดยไม่มีใครรู้</p>
+        </div>
+      </div>
+      <a class="mini-link" href="haru-shop-mock-ui.html?page=settings" target="_blank">🖱 ลองกดหน้านี้ในหน้าจอจำลอง →</a>
+    </section>
+
+    <section id="theme">
+      <div class="eyebrow">🎨 พิเศษ</div>
+      <h2>9. เปลี่ยนธีม / สี</h2>
+      <p class="section-sub">ปรับหน้าตาโปรแกรมให้เป็นสไตล์ของตัวเอง</p>
+      <div class="card">
+        <p>กดไอคอนรูปจานสี 🎨 ที่แถบเมนูซ้ายมือด้านล่าง จะเปิดหน้าต่างให้เลือก:</p>
+        <ul style="padding-left:20px; color:var(--text-dim);">
+          <li><b>สีเน้น</b> — สีของปุ่มและกรอบไฮไลต์ทั้งโปรแกรม เลือกจากวงกลมสี หรือกด "เลือกสีเอง" เพื่อใส่โค้ดสีเอง</li>
+          <li><b>โทนพื้นหลัง</b> — ดำ-แดง (ค่าเริ่มต้น), ดำล้วน, เทาเข้ม, น้ำเงินเข้ม หรือให้พื้นหลังปรับตามสีเน้นที่เลือก</li>
+          <li><b>ขนาดตัวหนังสือ</b> — เล็ก / กลาง / ใหญ่ เผื่อจอเล็กอ่านยาก</li>
+        </ul>
+        <p>เลือกเสร็จแล้วกด <b>"✓ ใช้ธีมนี้"</b> โปรแกรมจะรีเฟรชหน้าตาให้เองทันที</p>
+        <a class="mini-link" href="haru-shop-mock-ui.html?modal=modalTheme" target="_blank">🖱 ลองเปิดหน้าต่างธีมในหน้าจอจำลอง →</a>
+      </div>
+    </section>
+
+    <section id="key">
+      <div class="eyebrow">🔑 สำคัญ</div>
+      <h2>10. คีย์ของฉัน / ย้ายเครื่อง</h2>
+      <p class="section-sub">จัดการคีย์ใช้งาน ดูวันหมดอายุ และย้ายไปใช้กับคอมเครื่องอื่น</p>
+      <div class="card">
+        <ol class="steps">
+          <li>กดไอคอนกุญแจ 🔑 ที่แถบเมนูซ้ายมือด้านล่างสุด จะเห็นวันคงเหลือและรหัสคีย์ของตัวเอง</li>
+          <li>ถ้าจะย้ายไปใช้กับคอมเครื่องใหม่ ให้กดปุ่ม <b>"ไปใช้เครื่องอื่น"</b> ระบบจะปลดคีย์จากเครื่องเก่าและให้ไปใส่คีย์ในเครื่องใหม่ได้</li>
+          <li>มีข้อจำกัดว่าย้ายเครื่องได้สูงสุด 4 ครั้งต่อ 24 ชั่วโมง และต้องห่างกันอย่างน้อยครั้งละ 1 ชั่วโมง</li>
+          <li>ถ้ามีปัญหาเรื่องคีย์ กดปุ่ม <b>"ดิสคอร์ดร้าน"</b> เพื่อติดต่อสอบถามผู้ให้บริการโดยตรง</li>
+        </ol>
+        <div class="warn"><span class="ic">⚠</span><div>อย่าเผยแพร่คีย์ของตัวเองให้ผู้อื่น เพราะคีย์ผูกกับเครื่องเดียว การให้คนอื่นเอาไปใส่จะทำให้คีย์ของเราหลุดออกจากเครื่องเราเอง</div></div>
+        <a class="mini-link" href="haru-shop-mock-ui.html?modal=modalKey" target="_blank">🖱 ลองเปิดหน้าต่างคีย์ในหน้าจอจำลอง →</a>
+      </div>
+    </section>
+
+    <section id="glossary">
+      <div class="eyebrow">📖 อ่านเพิ่ม</div>
+      <h2>11. ศัพท์ที่ควรรู้ (สำหรับมือใหม่)</h2>
+      <div class="card">
+        <div class="glossary">
+          <div class="gl-item"><div class="gl-term">Emulator (อีมูเลเตอร์)</div><div class="gl-def">โปรแกรมที่จำลองมือถือขึ้นมาบนคอมพิวเตอร์ ทำให้เล่นเกมมือถือบนคอมได้ เช่น MuMu Player, LDPlayer</div></div>
+          <div class="gl-item"><div class="gl-term">adb.exe</div><div class="gl-def">ไฟล์เล็กๆ ที่ใช้เชื่อมต่อสื่อสารระหว่างโปรแกรมกับอีมูเลเตอร์ ปกติไม่ต้องไปยุ่งอะไรกับมัน โปรแกรมจะหาให้เองผ่านปุ่ม "Auto-find"</div></div>
+          <div class="gl-item"><div class="gl-term">Webhook</div><div class="gl-def">ลิงก์พิเศษที่ Discord สร้างให้ ใช้สำหรับให้โปรแกรมอื่นส่งข้อความเข้าห้องแชทได้อัตโนมัติ โดยไม่ต้องล็อกอินบัญชี Discord</div></div>
+          <div class="gl-item"><div class="gl-term">Multi-Buy</div><div class="gl-def">การซื้อ/เปิดใช้บูสต์หลายตัวพร้อมกันในครั้งเดียวก่อนเริ่มด่าน</div></div>
+          <div class="gl-item"><div class="gl-term">Relic</div><div class="gl-def">ไอเทมพิเศษที่บางครั้งต้องสุ่มเลือกในหน้าล็อบบี้ก่อนเริ่มเล่น</div></div>
+          <div class="gl-item"><div class="gl-term">Extract (บด)</div><div class="gl-def">การนำไอเทม/สมบัติที่ไม่ต้องการมาแปลงเป็นผงหรือวัตถุดิบอย่างอื่นในเกม</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq">
+      <div class="eyebrow">❓ ช่วยเหลือ</div>
+      <h2>12. คำถามที่พบบ่อย</h2>
+      <div class="card">
+        <div class="faq-item">
+          <div class="faq-q">🔴 กด Start แล้วบอทไม่ขยับเลย ทำยังไง</div>
+          <div class="faq-a">เช็คก่อนว่าไปหน้า "จอ" แล้วเลือกอุปกรณ์ไว้แล้วหรือยัง และอีมูเลเตอร์เปิดเกม Cookie Run Classic ค้างอยู่ที่หน้าล็อบบี้แล้วหรือไม่ ถ้ายังไม่ได้เลือกจอ บอทจะไม่รู้ว่าต้องไปควบคุมหน้าจอไหน</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">🔴 ทำไมจอถึงหลุดบ่อย / ขึ้น "Connection lost" บ่อย</div>
+          <div class="faq-a">ตรวจสอบสัญญาณอินเทอร์เน็ตของคอม และลองเปิดสวิตช์ "หน้า Connection lost ค้าง = รีเกมให้เอง" ในหน้าภาพรวม เพื่อให้บอทแก้ปัญหาให้เองอัตโนมัติเมื่อเกิดเหตุการณ์นี้</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">🔴 อยากให้แต่ละจอเล่นไม่เหมือนกัน ทำยังไง</div>
+          <div class="faq-a">ไปที่หน้า "จอ" แล้วเปิดสวิตช์ "ใช้ค่ารายจอ" จากนั้นคลิกเลือกจอที่ต้องการในลิสต์ด้านซ้าย แล้วตั้งค่าที่ต้องการให้จอนั้นแยกต่างหากได้เลย</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">🟡 คีย์ใกล้หมดอายุ ต้องทำยังไง</div>
+          <div class="faq-a">ติดต่อผู้ให้บริการ/ร้านที่ซื้อมาเพื่อต่ออายุ สามารถกดปุ่ม "ดิสคอร์ดร้าน" ในหน้าต่างคีย์ของฉันเพื่อติดต่อได้โดยตรง</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">🟢 อยากให้บอทเริ่ม-หยุดเองตามเวลาโดยไม่ต้องมานั่งกด ทำยังไง</div>
+          <div class="faq-a">ไปที่หน้า "ภาพรวม" เปิดสวิตช์ "ตั้งเวลาเปิด-ปิดบอท" แล้วใส่เวลาที่ต้องการเริ่มและหยุดในรูปแบบ 24 ชั่วโมง เช่น 05:00 ถึง 22:00</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="warning">
+      <div class="eyebrow">🚨 อ่านก่อนใช้งานจริง</div>
+      <h2>13. ข้อควรระวัง</h2>
+      <div class="card">
+        <div class="danger"><span class="ic">⛔</span><div>โปรแกรมประเภทนี้เป็นการใช้ระบบอัตโนมัติเล่นเกมแทนผู้เล่น ซึ่ง<b>ไม่ตรงกับข้อตกลงการใช้งาน (Terms of Service) ของผู้พัฒนาเกมส่วนใหญ่</b> การใช้งานอาจทำให้บัญชีถูกระงับหรือแบนได้โดยไม่มีการแจ้งล่วงหน้า ผู้ใช้ควรพิจารณาความเสี่ยงนี้ด้วยตัวเองก่อนตัดสินใจใช้งาน</div></div>
+        <div class="warn"><span class="ic">⚠</span><div>ไม่ควรใช้บัญชีเกมหลักหรือบัญชีที่ผูกกับข้อมูลสำคัญมาทดลองใช้โปรแกรมนี้</div></div>
+        <div class="warn"><span class="ic">⚠</span><div>อย่าแชร์ไฟล์โปรแกรมหรือคีย์ให้บุคคลที่ไม่รู้จัก และดาวน์โหลดไฟล์เฉพาะจากแหล่งที่เชื่อถือได้เท่านั้น เพื่อความปลอดภัยของคอมพิวเตอร์ตัวเอง</div></div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<footer>
+  คู่มือฉบับนี้จัดทำขึ้นเพื่อประกอบการอธิบายวิธีใช้งานเท่านั้น · <a href="haru-shop-mock-ui.html" target="_blank">เปิดหน้าจอจำลอง Haru Shop</a>
+</footer>
+
+</body>
+</html>
