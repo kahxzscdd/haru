@@ -1,0 +1,1354 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Haru Shop v1.9.1 — คู่มือการใช้งาน (Mock UI)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --accent:#1fdd78;
+  --accent-dim: rgba(31,221,120,.12);
+  --accent-dim2: rgba(31,221,120,.22);
+  --bg:#0a0c0f;
+  --bg-elev:#101318;
+  --card:#12161c;
+  --card2:#161b22;
+  --border:#232a33;
+  --border-soft:#1b212a;
+  --text:#e8ecf1;
+  --text-dim:#9aa4b2;
+  --text-dim2:#6b7484;
+  --danger:#e5484d;
+  --danger-dim:rgba(229,72,77,.15);
+  --warn:#f5a524;
+  --warn-dim:rgba(245,165,36,.1);
+  --radius:12px;
+  --font-size-base:14px;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Noto Sans Thai','Kanit',sans-serif;
+  font-size:var(--font-size-base);
+  -webkit-font-smoothing:antialiased;
+}
+body.bg-plum{ --bg:#120a1a; --bg-elev:#180f22; --card:#1a1026; --card2:#20132c; --border:#2c1c3a; --border-soft:#221530; }
+body.bg-slate{ --bg:#0d0f12; --bg-elev:#141719; --card:#17191d; --card2:#1c1f24; --border:#282c32; --border-soft:#212429; }
+body.bg-navy{ --bg:#070d16; --bg-elev:#0c1420; --card:#0f1826; --card2:#131f30; --border:#1c2c40; --border-soft:#162334; }
+
+.wrap{display:flex; min-height:100vh;}
+
+/* ---------- SIDEBAR ---------- */
+.sidebar{
+  width:78px; flex:0 0 78px;
+  background:var(--bg-elev);
+  border-right:1px solid var(--border-soft);
+  display:flex; flex-direction:column; align-items:center;
+  padding:18px 0; gap:6px;
+  position:sticky; top:0; height:100vh;
+}
+.logo{
+  width:40px;height:40px;border-radius:11px;
+  background:linear-gradient(160deg,var(--accent),#0fae57);
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;color:#04160c;font-size:19px;margin-bottom:18px;
+  box-shadow:0 4px 14px var(--accent-dim);
+  user-select:none;
+}
+.nav-group{display:flex;flex-direction:column;gap:4px;}
+.nav-spacer{flex:1;}
+.nav-btn{
+  width:46px;height:46px;border-radius:11px;
+  display:flex;align-items:center;justify-content:center;
+  background:transparent;border:1px solid transparent;
+  color:var(--text-dim2); cursor:pointer;
+  transition:background .15s,color .15s,border-color .15s,transform .1s;
+}
+.nav-btn svg{width:20px;height:20px;}
+.nav-btn:hover{background:var(--card2);color:var(--text);}
+.nav-btn:active{transform:scale(.94);}
+.nav-btn.active{
+  background:var(--accent-dim);
+  border-color:var(--accent-dim2);
+  color:var(--accent);
+}
+.nav-tooltip{position:relative;}
+
+/* ---------- MAIN ---------- */
+.main{flex:1; min-width:0; display:flex; flex-direction:column;}
+.topbar{
+  display:flex;align-items:flex-start;justify-content:space-between;
+  padding:20px 26px 14px; gap:16px; flex-wrap:wrap;
+}
+.title-block h1{
+  margin:0; font-size:21px; font-weight:600; display:flex; align-items:baseline; gap:8px;
+}
+.ver-badge{font-size:12px; color:var(--accent); font-weight:600;}
+.subtitle{margin:2px 0 8px; color:var(--text-dim); font-size:12.5px;}
+.trial-pill{
+  display:inline-flex; align-items:center; gap:6px;
+  background:var(--accent-dim); color:var(--accent);
+  border:1px solid var(--accent-dim2);
+  padding:4px 12px; border-radius:999px; font-size:12px; font-weight:500;
+}
+.trial-pill .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);}
+
+.top-actions{display:flex; align-items:center; gap:10px; flex-wrap:wrap;}
+.chip{
+  display:flex; align-items:center; gap:6px;
+  background:var(--card); border:1px solid var(--border);
+  padding:8px 14px; border-radius:10px; font-size:13px; color:var(--text);
+  cursor:pointer; transition:.15s;
+}
+.chip:hover{background:var(--card2); border-color:var(--border);}
+.chip:active{transform:scale(.97);}
+.btn-update{
+  background:var(--accent-dim); color:var(--accent); border:1px solid var(--accent-dim2);
+  font-weight:600;
+}
+.btn-update:hover{background:var(--accent-dim2);}
+.status-pill{
+  display:flex; align-items:center; gap:6px;
+  background:var(--card); border:1px solid var(--border);
+  padding:8px 14px; border-radius:10px; font-size:13px;
+}
+.status-pill .dot{width:7px;height:7px;border-radius:50%;background:var(--accent); box-shadow:0 0 8px var(--accent);}
+.status-pill.stopped .dot{background:var(--warn); box-shadow:0 0 8px var(--warn);}
+
+.stopbtn{
+  margin:6px 26px 0; padding:16px; text-align:center;
+  background:linear-gradient(180deg,#e5484d,#c73439);
+  color:#fff; font-weight:600; border-radius:12px; cursor:pointer;
+  display:flex; align-items:center; justify-content:center; gap:8px;
+  transition:filter .15s, transform .08s; user-select:none;
+}
+.stopbtn:hover{filter:brightness(1.08);}
+.stopbtn:active{transform:scale(.995);}
+.stopbtn.playing{background:linear-gradient(180deg,var(--accent),#149c53); color:#04160c;}
+
+.content{padding:22px 26px 90px; overflow-y:auto;}
+.page{display:none;}
+.page.active{display:block; animation:fade .18s ease;}
+@keyframes fade{from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:translateY(0);}}
+
+.page-h{font-size:17px; font-weight:600; margin:4px 0 2px;}
+.page-sub{color:var(--text-dim); font-size:12.5px; margin:0 0 16px;}
+
+.tabs{display:flex; gap:8px; margin-bottom:16px; flex-wrap:wrap;}
+.tab{
+  padding:9px 16px; border-radius:9px; background:var(--card);
+  border:1px solid var(--border); font-size:13px; cursor:pointer;
+  display:flex; align-items:center; gap:6px; color:var(--text-dim); transition:.15s;
+}
+.tab:hover{color:var(--text); border-color:var(--border);}
+.tab.active{background:var(--accent-dim); color:var(--accent); border-color:var(--accent-dim2); font-weight:600;}
+
+.card{
+  background:var(--card); border:1px solid var(--border); border-radius:var(--radius);
+  padding:18px; margin-bottom:14px;
+}
+.card.outline-accent{border-color:var(--accent-dim2); box-shadow:0 0 0 1px var(--accent-dim) inset;}
+.card-head{display:flex; align-items:flex-start; justify-content:space-between; gap:12px;}
+.card-title{font-size:14.5px; font-weight:600; display:flex; align-items:center; gap:8px; margin:0;}
+.card-desc{color:var(--text-dim); font-size:12.5px; margin:4px 0 0;}
+
+/* switch */
+.switch{
+  width:42px; height:24px; border-radius:999px; background:#2a3038; position:relative;
+  cursor:pointer; flex:0 0 auto; transition:background .18s; border:1px solid var(--border);
+}
+.switch::after{
+  content:''; position:absolute; width:18px; height:18px; border-radius:50%;
+  background:#c7cdd6; top:2px; left:2px; transition:.18s;
+}
+.switch.on{background:var(--accent-dim2); border-color:var(--accent);}
+.switch.on::after{left:20px; background:var(--accent); box-shadow:0 0 6px var(--accent);}
+
+.radio{
+  width:18px;height:18px;border-radius:50%; border:2px solid var(--text-dim2);
+  cursor:pointer; position:relative; flex:0 0 auto; transition:.15s;
+}
+.radio.on{border-color:var(--accent);}
+.radio.on::after{content:'';position:absolute; inset:3px; border-radius:50%; background:var(--accent);}
+
+.check{
+  width:20px;height:20px;border-radius:6px; border:2px solid var(--text-dim2); background:transparent;
+  cursor:pointer; display:flex; align-items:center; justify-content:center; flex:0 0 auto; transition:.15s;
+}
+.check.on{background:var(--accent); border-color:var(--accent);}
+.check.on::after{content:'✓'; font-size:12px; font-weight:700; color:#04160c;}
+
+.row{display:flex; align-items:center; gap:12px; padding:10px 0;}
+.row + .row{border-top:1px solid var(--border-soft);}
+.row .label{flex:1; min-width:0;}
+.row .label b{font-size:13.5px; font-weight:500;}
+.row .label span{display:block; font-size:12px; color:var(--text-dim); margin-top:2px;}
+
+.seg{display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-top:8px;}
+.seg-btn{
+  padding:11px 8px; text-align:center; border-radius:9px; background:var(--card2);
+  border:1px solid var(--border); font-size:13px; cursor:pointer; transition:.15s; color:var(--text-dim);
+}
+.seg-btn:hover{color:var(--text);}
+.seg-btn.on{background:var(--accent); color:#04160c; font-weight:600; border-color:var(--accent);}
+
+.field-row{display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:12px;}
+.field-row .flabel b{font-size:13px;}
+.field-row .flabel span{display:block; font-size:11.5px; color:var(--text-dim);}
+
+.input{
+  background:var(--bg-elev); border:1px solid var(--border); border-radius:8px;
+  padding:9px 12px; color:var(--text); font-size:13px; width:100%;
+}
+.input:focus{outline:none; border-color:var(--accent);}
+.input-sm{width:70px; text-align:center;}
+
+.note{
+  background:var(--warn-dim); border:1px solid rgba(245,165,36,.35); color:#e7b458;
+  padding:10px 12px; border-radius:9px; font-size:12px; margin-top:10px; display:flex; gap:8px;
+}
+.note.green{background:var(--accent-dim); border-color:var(--accent-dim2); color:var(--accent);}
+
+.grid2{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+@media(max-width:720px){.grid2{grid-template-columns:1fr;}}
+
+.opt-card{
+  border:1px solid var(--border); background:var(--card2); border-radius:10px; padding:14px;
+  cursor:pointer; transition:.15s; position:relative;
+}
+.opt-card:hover{border-color:var(--border);}
+.opt-card.on{border-color:var(--accent); box-shadow:0 0 0 1px var(--accent-dim);}
+.opt-card .oc-head{display:flex; align-items:center; justify-content:space-between;}
+.opt-card b{font-size:13.5px;}
+.opt-card p{margin:4px 0 0; font-size:11.5px; color:var(--text-dim);}
+
+.pill-btn{
+  padding:12px; text-align:center; border-radius:9px; background:var(--card2);
+  border:1px solid var(--border); cursor:pointer; font-size:13.5px; font-weight:500;
+  transition:.15s; color:var(--text-dim);
+}
+.pill-btn:hover{color:var(--text);}
+.pill-btn.on{background:var(--accent); color:#04160c; border-color:var(--accent); font-weight:600;}
+
+.mono-btn{
+  display:flex; align-items:center; justify-content:center; gap:6px;
+  background:var(--card2); border:1px solid var(--border); border-radius:9px;
+  padding:11px; font-size:13px; cursor:pointer; color:var(--text-dim); transition:.15s;
+}
+.mono-btn:hover{color:var(--text);}
+.mono-btn.primary{background:var(--accent-dim); color:var(--accent); border-color:var(--accent-dim2); font-weight:600;}
+
+/* activity log panel */
+.logstrip{
+  position:fixed; left:78px; right:0; bottom:0;
+  background:var(--bg-elev); border-top:1px solid var(--border-soft);
+  display:flex; flex-direction:column;
+  font-size:12.5px; color:var(--text-dim);
+  transition:height .22s ease; overflow:hidden;
+  height:48px; z-index:30;
+  --logfs:12px;
+}
+.logstrip.shown{height:340px;}
+.logstrip.expanded{height:74vh;}
+@media(max-width:600px){.logstrip{left:0;}}
+
+.log-head{
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+  padding:0 26px; height:48px; flex:0 0 48px; flex-wrap:wrap;
+}
+.log-head .lh-left{display:flex; align-items:center; gap:10px; flex-wrap:wrap; min-width:0;}
+.log-head .lh-title{font-weight:600; color:var(--text); font-size:12.5px; white-space:nowrap;}
+.log-count{
+  display:flex; align-items:center; gap:5px; padding:3px 9px; border-radius:7px;
+  font-size:11.5px; font-weight:600; background:var(--card); border:1px solid var(--border); color:var(--text-dim);
+}
+.log-count.ok{color:var(--accent); border-color:var(--accent-dim2); background:var(--accent-dim);}
+.log-count.warn{color:var(--warn); border-color:rgba(245,165,36,.35); background:var(--warn-dim);}
+.log-count.err{color:var(--danger); border-color:rgba(229,72,77,.35); background:var(--danger-dim);}
+.log-head .actions{display:flex; gap:8px; flex:0 0 auto;}
+.mini-btn{
+  padding:6px 12px; border-radius:7px; background:var(--card); border:1px solid var(--border);
+  font-size:12px; cursor:pointer; color:var(--text-dim); transition:.15s; white-space:nowrap;
+  display:inline-flex; align-items:center; gap:4px;
+}
+.mini-btn:hover{color:var(--text); background:var(--card2);}
+.mini-btn.active{color:var(--accent); border-color:var(--accent-dim2); background:var(--accent-dim);}
+
+.log-toolbar{
+  display:none; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;
+  padding:0 26px 10px; flex:0 0 auto; border-bottom:1px solid var(--border-soft);
+}
+.logstrip.shown .log-toolbar, .logstrip.expanded .log-toolbar{display:flex;}
+.log-toolbar .tb-left, .log-toolbar .tb-right{display:flex; align-items:center; gap:8px; flex-wrap:wrap;}
+.log-select{
+  background:var(--card); border:1px solid var(--border); color:var(--text-dim); font-size:12px;
+  padding:7px 10px; border-radius:7px; cursor:pointer;
+}
+.log-search{
+  background:var(--card); border:1px solid var(--border); color:var(--text); font-size:12px;
+  padding:7px 10px; border-radius:7px; width:190px;
+}
+.log-search:focus{outline:none; border-color:var(--accent);}
+.fs-group{display:flex; border:1px solid var(--border); border-radius:7px; overflow:hidden;}
+.fs-group .mini-btn{border:none; border-radius:0; background:var(--card);}
+.fs-group .mini-btn:not(:last-child){border-right:1px solid var(--border);}
+
+.log-body{
+  display:none; flex:1; min-height:0; overflow-y:auto; padding:8px 26px 16px;
+  font-family:'Courier New',monospace; font-size:var(--logfs); line-height:1.9;
+}
+.logstrip.shown .log-body, .logstrip.expanded .log-body{display:block;}
+.log-body.wrap .log-line{white-space:normal; word-break:break-word;}
+.log-body:not(.wrap) .log-line{white-space:nowrap;}
+.log-line{color:var(--text-dim); padding:1px 0;}
+.log-line .t{color:var(--text-dim2); margin-right:8px;}
+.log-line .dev{color:#7dd3fc; margin-right:6px;}
+.log-line .ic{margin-right:6px;}
+.log-line.ok .ic{color:var(--accent);}
+.log-line.warn .ic{color:var(--warn);}
+.log-line.err .ic{color:var(--danger);}
+.log-line .msg{color:var(--text);}
+.log-empty{color:var(--text-dim2); text-align:center; padding:30px 0; font-family:'Noto Sans Thai',sans-serif;}
+
+/* modal */
+.modal-bg{
+  position:fixed; inset:0; background:rgba(3,4,6,.65); backdrop-filter:blur(2px);
+  display:none; align-items:center; justify-content:center; z-index:50; padding:20px;
+}
+.modal-bg.show{display:flex;}
+.modal{
+  background:var(--bg-elev); border:1px solid var(--border); border-radius:16px;
+  width:100%; max-width:560px; padding:22px; max-height:88vh; overflow-y:auto;
+  box-shadow:0 20px 60px rgba(0,0,0,.5);
+}
+.modal-head{display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;}
+.modal-head h3{margin:0; font-size:15.5px; display:flex; align-items:center; gap:8px;}
+.x-btn{
+  width:30px;height:30px;border-radius:8px; background:var(--card2); border:1px solid var(--border);
+  display:flex; align-items:center; justify-content:center; cursor:pointer; color:var(--text-dim);
+}
+.x-btn:hover{color:var(--text);}
+
+.swatch-row{display:flex; gap:10px; margin:10px 0;}
+.swatch{
+  width:34px; height:34px; border-radius:50%; cursor:pointer; border:2px solid transparent;
+  transition:.15s; position:relative;
+}
+.swatch.sel{border-color:#fff; transform:scale(1.08);}
+.swatch.sel::after{content:'✓'; position:absolute; inset:0; display:flex; align-items:center; justify-content:center; color:#04160c; font-weight:700; font-size:13px;}
+
+.key-box{
+  display:flex; gap:8px; align-items:center;
+}
+.key-box .input{font-family:monospace; letter-spacing:1px;}
+
+.stat-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-top:14px;}
+@media(max-width:640px){.stat-grid{grid-template-columns:repeat(2,1fr);}}
+.stat-box{background:var(--card2); border:1px solid var(--border); border-radius:10px; padding:12px;}
+.stat-box .sv{font-size:20px; font-weight:700; margin-top:4px;}
+.stat-box .sl{font-size:11px; color:var(--text-dim); display:flex; align-items:center; gap:5px;}
+
+.device-list{border:1px solid var(--border); border-radius:10px; overflow:hidden;}
+.device-row{
+  display:flex; align-items:center; gap:10px; padding:11px 14px; cursor:pointer;
+  border-bottom:1px solid var(--border-soft); transition:.15s;
+}
+.device-row:last-child{border-bottom:none;}
+.device-row:hover{background:var(--card2);}
+.device-row.sel{background:var(--accent-dim);}
+.device-row .dcheck{width:18px;height:18px;border-radius:5px;border:2px solid var(--text-dim2);}
+.device-row.sel .dcheck{background:var(--accent); border-color:var(--accent);}
+.device-tag{font-size:11px; padding:2px 8px; border-radius:6px; background:var(--card); border:1px solid var(--border); color:var(--text-dim);}
+
+.disclaimer{
+  margin:26px; padding:14px 16px; border-radius:12px; border:1px dashed var(--border);
+  color:var(--text-dim2); font-size:11.5px; line-height:1.6;
+}
+.hint{color:var(--text-dim2); font-size:11.5px; margin-top:8px;}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="logo">H</div>
+    <div class="nav-group">
+      <div class="nav-btn" data-page="overview" title="ภาพรวม">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 15l3-4 3 3 5-7"/></svg>
+      </div>
+      <div class="nav-btn" data-page="devices" title="จอ / อุปกรณ์">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+      </div>
+      <div class="nav-btn" data-page="tasks" title="งาน">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="2"/><path d="M9 22l2-8-3-2 1-5 4 1 2 3 3 1"/></svg>
+      </div>
+      <div class="nav-btn" data-page="boost" title="บูสต์ &amp; การเล่น">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r=".5" fill="currentColor"/></svg>
+      </div>
+      <div class="nav-btn" data-page="gacha" title="สมบัติ">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h12l4 6-10 12L2 9z"/><path d="M2 9h20M9 3l3 6 3-6M12 9l-2 12M12 9l2 12"/></svg>
+      </div>
+    </div>
+    <div class="nav-spacer"></div>
+    <div class="nav-group">
+      <div class="nav-btn" data-page="settings" title="ตั้งค่า">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 00.3 1.9l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.7 1.7 0 00-1.9-.3 1.7 1.7 0 00-1 1.5V21a2 2 0 11-4 0v-.1a1.7 1.7 0 00-1-1.6 1.7 1.7 0 00-1.9.3l-.1.1a2 2 0 11-2.8-2.8l.1-.1a1.7 1.7 0 00.3-1.9 1.7 1.7 0 00-1.5-1H3a2 2 0 110-4h.1a1.7 1.7 0 001.5-1 1.7 1.7 0 00-.3-1.9l-.1-.1a2 2 0 112.8-2.8l.1.1a1.7 1.7 0 001.9.3H9a1.7 1.7 0 001-1.5V3a2 2 0 114 0v.1a1.7 1.7 0 001 1.5 1.7 1.7 0 001.9-.3l.1-.1a2 2 0 112.8 2.8l-.1.1a1.7 1.7 0 00-.3 1.9V9a1.7 1.7 0 001.5 1H21a2 2 0 110 4h-.1a1.7 1.7 0 00-1.5 1z"/></svg>
+      </div>
+      <div class="nav-btn" data-page="theme" title="ธีม &amp; สี" data-modal="modalTheme">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="8" cy="10" r="1.3" fill="currentColor"/><circle cx="12" cy="8" r="1.3" fill="currentColor"/><circle cx="16" cy="10" r="1.3" fill="currentColor"/><path d="M12 21a2 2 0 01-2-2c0-1 .5-1.3.5-2.2A2.3 2.3 0 0113 14.5h3A4.5 4.5 0 0021 10 9 9 0 1012 21z"/></svg>
+      </div>
+      <div class="nav-btn" data-page="key" title="คีย์ของฉัน" data-modal="modalKey">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="7.5" cy="15.5" r="4.5"/><path d="M10.6 12.4L20 3M17 6l3 3M14 9l2.5 2.5"/></svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main">
+    <div class="topbar">
+      <div class="title-block">
+        <h1>Haru Shop <span class="ver-badge">v1.9.1</span></h1>
+        <div class="subtitle">Auto bot — Cookie Run Classic</div>
+        <div class="trial-pill"><span class="dot"></span> 8 วัน · หมด 13/08/26</div>
+      </div>
+      <div class="top-actions">
+        <div class="chip">📁 ชุด: ฟาร์มเงิน</div>
+        <div class="chip" id="langChip">🌐 EN</div>
+        <div class="chip btn-update">↻ เช็คอัพเดท</div>
+        <div class="status-pill" id="statusPill"><span class="dot"></span> Running · <span id="runCount">1</span> จอ</div>
+      </div>
+    </div>
+
+    <div class="stopbtn" id="stopBtn">
+      <span id="stopIcon">⏹</span> <span id="stopLabel">Stop bot</span>
+    </div>
+
+    <div class="content">
+
+      <!-- ===================== OVERVIEW ===================== -->
+      <div class="page" id="page-overview">
+        <div class="page-h">ภาพรวม</div>
+        <div class="page-sub">เหลือบดูสถานะบอททันที</div>
+
+        <div class="card outline-accent">
+          <div class="card-head">
+            <div class="card-title">✅ ทุกอย่างปกติ · กำลังเล่น 3 จอ</div>
+            <div style="text-align:right;">
+              <div style="font-size:22px;font-weight:700;">1</div>
+              <div style="font-size:11px;color:var(--text-dim);">รอบรวมทุกจอ</div>
+            </div>
+          </div>
+          <div class="card-desc">3/3 จอออนไลน์ · ไม่มีจอหลุด</div>
+        </div>
+
+        <div class="stat-grid">
+          <div class="stat-box"><div class="sl">🟢 ออนไลน์</div><div class="sv">3/3</div></div>
+          <div class="stat-box"><div class="sl">▶ กำลังเล่น</div><div class="sv">3</div></div>
+          <div class="stat-box"><div class="sl">⏱ ทำงานมา</div><div class="sv">00:00:43</div></div>
+          <div class="stat-box"><div class="sl">🍪 เจอไม้มินิเกม</div><div class="sv">0</div></div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <div class="card-title">🌙 ระบบพักอัตโนมัติ (กันตรวจจับบอท)</div>
+              <div class="card-desc">เล่นเป็นช่วง + พักสุ่มเหมือนคนจริง · ลดโอกาสโดนแบน</div>
+            </div>
+            <div class="switch" data-target="ov-sleep"></div>
+          </div>
+          <div class="tabs" style="margin-top:14px;">
+            <div class="tab active">▶ ทุกจอกำลังเล่น (3 จอ)</div>
+          </div>
+          <div class="grid2">
+            <div class="field-row" style="width:100%;flex-direction:column;align-items:flex-start;gap:4px;">
+              <div class="flabel"><b>▶ เล่น 60–120 นาที</b></div>
+            </div>
+            <div class="field-row" style="width:100%;flex-direction:column;align-items:flex-start;gap:4px;">
+              <div class="flabel"><b>🌗 พัก 10–20 นาที</b></div>
+            </div>
+          </div>
+          <div class="field-row" style="width:100%;flex-direction:column;align-items:flex-start;gap:4px;">
+            <div class="flabel"><b>🌙 นอน 1.5–2 ชม.</b></div>
+          </div>
+          <div class="hint">ระหว่างพัก ทำงาน Home แทนการยืนเฉยๆ (พักสั้นทำดลอด · นอนยาวทำเป็นช่วง)</div>
+          <div class="seg" style="grid-template-columns:repeat(5,1fr); margin-top:12px;">
+            <div class="seg-btn">ไม่ทำ</div>
+            <div class="seg-btn on">💗 หัวใจ (รับส่ง+รายชื่อ)</div>
+            <div class="seg-btn">👥 เพื่อน</div>
+            <div class="seg-btn">🎁 ของขวัญ</div>
+            <div class="seg-btn">💎 สมบัติ</div>
+          </div>
+          <div class="hint">✓ แต่ละจอสุ่มตารางเอง (ไม่พร้อมกัน) · พักตอนกลับ lobby ไม่ตัดกลางรอบ</div>
+        </div>
+
+        <div class="card outline-accent">
+          <div class="card-head">
+            <div>
+              <div class="card-title">📵 หน้า Connection lost ค้าง = รีเกมให้เอง</div>
+              <div class="card-desc">เน็ตเกมหลุดแล้วเด้งหน้า "Connection lost!" · กดปุ่ม Confirm ครบ 3 ครั้ง แล้วยังไม่หาย → ปิด-เปิดเกมใหม่แล้ววิ่งต่อ ไม่ต้องรอคนมากด</div>
+            </div>
+            <div class="switch on" data-target="ov-reconnect"></div>
+          </div>
+          <div class="note green">📌 ดูเฉพาะป๊อปอัพนี้ตัวเดียว หน้าอื่นและตาที่กำลังเล่นไม่แตะเลย · รีติดกันไม่เกิน 3 ครั้ง → ยังหลุดซ้ำอีก = หยุดจอนี้ ขึ้นแจ้งเตือน</div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div class="card-title">🕒 ตั้งเวลาเปิด-ปิดบอท</div>
+            <div class="switch" data-target="ov-schedule"></div>
+          </div>
+          <div class="card-desc">ถึงเวลาเริ่ม → กด Start ให้เอง · ถึงเวลาหยุด → ให้ทุกจอจบรอบที่ค้างก่อน แล้วหยุดเอง</div>
+          <div class="grid2" style="margin-top:12px;">
+            <div><div class="hint" style="margin-top:0;">เริ่มเวลา</div><input class="input" value="05:00"></div>
+            <div><div class="hint" style="margin-top:0;">หยุดเวลา</div><input class="input" value="22:00"></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title" style="margin-bottom:10px;">เหตุการณ์ล่าสุด (รวมทุกจอ) <span style="float:right;font-size:11px;color:var(--text-dim);font-weight:400;">อัปเดตสด</span></div>
+          <div class="row"><div class="label"><span style="color:var(--accent);font-weight:600;">09:31</span> <b style="margin-left:6px;">จอ 3</b> — เริ่มเฉพาะจอนี้</div></div>
+          <div class="row"><div class="label"><span style="color:var(--accent);font-weight:600;">09:31</span> <b style="margin-left:6px;">จอ 1</b> — จบรอบที่ 1 · 🎁 1 · 🪙 29,050</div></div>
+          <div class="row"><div class="label"><span style="color:var(--accent);font-weight:600;">09:31</span> <b style="margin-left:6px;">จอ 2</b> — เริ่มเฉพาะจอนี้</div></div>
+          <div class="row"><div class="label"><span style="color:var(--accent);font-weight:600;">09:31</span> — เริ่มบอท 1 จอ</div></div>
+        </div>
+      </div>
+
+      <!-- ===================== DEVICES ===================== -->
+      <div class="page" id="page-devices">
+        <div class="page-h">จอ</div>
+        <div class="page-sub">เชื่อม · ตั้งค่า · สั่งเล่นทีละจอ — ที่เดียวจบ</div>
+
+        <div class="card" style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+          <input class="input" style="flex:1;min-width:220px;" value="C:\Program Files\Netease\MuMuPlayer\nx_main\adb.exe">
+          <div class="mono-btn">Auto-find</div>
+          <div class="mono-btn">📱 LD</div>
+          <div class="mono-btn primary">🦊 MuMu</div>
+          <div class="mono-btn" id="openDeviceModal">🖥 เลือกจอ...</div>
+          <div class="chip" style="cursor:default;">● 3/3 จอ · เล่น 3</div>
+        </div>
+
+        <div class="card outline-accent">
+          <div class="card-head">
+            <div>
+              <div class="card-title">🖥 ใช้ค่ารายจอ (ตั้งบูสต์/งานแยกแต่ละจอ)</div>
+              <div class="card-desc">ปิด = ทุกจอใช้ค่ากลาง (หน้า 🎯 บูสต์ &amp; การเล่น) เหมือนกัน · เปิด = ตั้งแยกทีละจอด้านล่างถึงจะมีผล</div>
+            </div>
+            <div class="switch on" data-target="dev-percreen"></div>
+          </div>
+        </div>
+
+        <div class="grid2" style="align-items:flex-start;">
+          <div class="card">
+            <div class="card-title" style="margin-bottom:10px;">รายการจอ <span style="color:var(--text-dim);font-weight:400;">3 จอ</span></div>
+            <input class="input" style="margin-bottom:10px;" placeholder="🔍 ค้นหาจอ...">
+            <div class="device-list">
+              <div class="device-row sel" data-dsel="1"><div class="dcheck"></div><div style="flex:1;"><b>จอ 1 · ทดลองจอ 1 (163…)</b><div class="hint" style="margin:2px 0 0;">▶ กำลังเล่น · 1 รอบ · 📁 ฟาร์มเงิน</div></div></div>
+              <div class="device-row" data-dsel="2"><div class="dcheck"></div><div style="flex:1;"><b>จอ 2 · ทดลองจอ 2 (164…)</b><div class="hint" style="margin:2px 0 0;">▶ กำลังเล่น · 0 รอบ · 📁 ฟาร์มเงิน</div></div></div>
+              <div class="device-row sel" data-dsel="3"><div class="dcheck"></div><div style="flex:1;"><b>จอ 3 · ทดลองจอ 3 (164…)</b><div class="hint" style="margin:2px 0 0;">▶ กำลังเล่น · 0 รอบ · 🎁 Box · 📁 ฟาร์มเงิน</div></div></div>
+            </div>
+            <div style="display:flex; gap:8px; margin-top:12px;">
+              <div class="mono-btn primary" style="flex:1;">▶ เริ่มทุกจอ</div>
+              <div class="mono-btn" style="flex:1;">⏹ หยุดหมด</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-head">
+              <div class="card-title">● จอ 3 · ทดลองจอ 3 (16448)</div>
+            </div>
+            <div style="display:flex; gap:6px; flex-wrap:wrap; margin:8px 0 12px;">
+              <span class="device-tag">📁 ฟาร์มเงิน</span>
+              <span class="device-tag">กำลังเล่น · 0 รอบ</span>
+              <span class="device-tag">🎁 Box</span>
+              <span class="device-tag" style="background:var(--danger-dim);color:var(--danger);border-color:transparent;">📷 จับภาพ · หน้าต่าง</span>
+            </div>
+            <div class="mono-btn" style="background:var(--danger-dim);color:var(--danger);border-color:transparent;margin-bottom:12px;">⏹ หยุดจอนี้</div>
+            <div class="tabs">
+              <div class="tab active">⭐ งาน</div>
+              <div class="tab">🎯 บูสต์</div>
+              <div class="tab">⚙ กระโดด</div>
+              <div class="tab">✨ ฟีเจอร์</div>
+              <div class="tab">💎 สมบัติ</div>
+              <div class="tab">🌙 พัก</div>
+            </div>
+            <div class="note">🔒 จอนี้กำลังเล่นอยู่ — หยุดจอก่อนจะแก้ตั้งค่าได้ (จออื่นที่ไม่ได้เล่นยังแก้ได้ปกติ)</div>
+            <div class="card-title" style="margin-top:14px;font-size:13px;">งานที่ให้จอนี้ทำ <span style="float:right;font-weight:400;font-size:12px;color:var(--text-dim);">ตั้งเองจอนี้</span></div>
+            <div class="hint" style="margin-bottom:8px;">▶ โหมดหลัก (เลือก 1)</div>
+            <div class="pill-btn" style="margin-bottom:6px;">🪙 วิ่งเก็บเหรียญ</div>
+            <div class="pill-btn" style="margin-bottom:6px;">🎉 Party Run รายวัน (Solo)</div>
+            <div class="pill-btn on" style="margin-bottom:6px;">🎁 ฟาร์มกล่อง</div>
+            <div class="pill-btn">✖ เกาะเหรียญ</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===================== TASKS (งาน) ===================== -->
+      <div class="page" id="page-tasks">
+        <div class="page-h">งาน</div>
+        <div class="page-sub">เลือกว่าจะให้บอททำอะไร — โหมดหลักกรอกกด Start · งานเสริมเปิดสวิตช์แล้วทำทันที</div>
+        <div class="tabs" id="taskTabs">
+          <div class="tab active" data-tsub="run">🏃 วิ่ง</div>
+          <div class="tab" data-tsub="friend">👥 เพื่อน</div>
+          <div class="tab" data-tsub="heart">💗 หัวใจ</div>
+          <div class="tab" data-tsub="gift">🎁 ของขวัญ</div>
+        </div>
+
+        <div class="note" style="margin-bottom:14px;">⚡ งานเสริม (เพื่อน/หัวใจ/ของขวัญ) — เปิดสวิตช์แล้วทำทันที ไม่ต้องกด Start (ทำได้ทีละอย่าง · ระหว่างงบหหลักวิ่งจะล็อกไว้)</div>
+
+        <div class="tsub" id="tsub-run">
+          <div class="card-title" style="margin-bottom:10px;">▶ โหมดหลัก — เลือก 1 อย่าง แล้วกด Start บอทึงเริ่มวิ่ง</div>
+          <div class="grid2" style="grid-template-columns:repeat(4,1fr);">
+            <div class="opt-card"><div class="oc-head"><b>🪙 เก็บเหรียญ (ปกติ)</b><div class="radio"></div></div><p>วิ่งจนจบเกมทุกด่าน เก็บเหรียญ/คะแนนเต็มรอบ</p></div>
+            <div class="opt-card"><div class="oc-head"><b>🎉 Party Run รายวัน</b><div class="radio"></div></div><p>เข้า Solo Race · เก็บเควสรายวัน (ตั้งหมดเดลย) · เลือกได้ว่าห้ามเข้าแล้วออกเลย หรือเล่นจนแพ้</p></div>
+            <div class="opt-card on"><div class="oc-head"><b>🎁 ฟาร์มกล่อง</b><div class="radio on"></div></div><p>กระโดดน้อยมาก — เก็บกล่องแม่น เก็บครบแล้วออก</p></div>
+            <div class="opt-card"><div class="oc-head"><b>✖ เกาะเหรียญ (Island of Coins)</b><div class="radio"></div></div><p>ด่านพิเศษ ตั้งด่านค้างไว้ที่ Island of Coins เองก่อนกด Start · ไม่มีบูสต์/นินจา/สกิล ตั้งหมดยุดเอง</p></div>
+          </div>
+          <div class="note green" style="margin-top:10px;">⚙ บูสต์/กระโดด/ฟีเจอร์ ใช้ตามหน้า · 🎯 หมดกันทุกโหมด (Party Run ใช้คำถามนี้เฉพาะไสตล์ "เล่นจนแพ้แล้วออก")</div>
+          <div class="field-row" style="width:100%;">
+            <div class="flabel"><b>💗 พักหัวใจ:</b></div>
+          </div>
+          <div class="seg" style="grid-template-columns:repeat(5,1fr);">
+            <div class="seg-btn">ไม่ทำ</div><div class="seg-btn">ทุก 30 นาที</div><div class="seg-btn">ทุก 1 ชม.</div><div class="seg-btn">ทุก 2 ชม.</div><div class="seg-btn on">⚙ ตั้งเอง</div>
+          </div>
+          <div class="hint">เล่นครบ 300 นาที → จบดาที่ค้างก่อน แล้วออกไปทำหัวใจ (ครบชุด (+รายชื่อเพื่อน)) · เสร็จก็กลับมาวิ่งต่อ (เพดาน 8 นาทีก็ทันค้าง)</div>
+          <div class="field-row" style="width:100%; margin-top:14px;">
+            <div class="flabel"><b>🎁 เก็บกี่กล่องแล้วออก:</b></div>
+          </div>
+          <div class="seg" style="grid-template-columns:repeat(4,1fr);">
+            <div class="seg-btn">1</div><div class="seg-btn">2</div><div class="seg-btn">2–3</div><div class="seg-btn on">⚙ ตั้งเอง</div>
+          </div>
+        </div>
+
+        <div class="tsub" id="tsub-friend" style="display:none;">
+          <div class="card">
+            <div class="card-head">
+              <div><div class="card-title">👥 Add Friends</div><div class="card-desc">ส่งคำขอเพื่อนอัตโนมัติ — ทำทุกจอที่เลือก เปิดแล้วทำงานทันที</div></div>
+              <div class="switch" data-target="fr-add"></div>
+            </div>
+            <div class="note">⚠ ต้องอยู่หน้าล็อบบี้ หรือหน้าเริ่มเกม เท่านั้น · เปิดแล้วขอทำงานทันที (ปุ่ม Start จะถูกล็อก จนกว่าจะปิดสวิตช์นี้)</div>
+          </div>
+          <div class="card">
+            <div class="card-head">
+              <div><div class="card-title">🗑 ลบเพื่อนเวลาต่ำ</div><div class="card-desc">เข้าหน้า Manage เรียงเวลาต่ำนบน แล้วไล่กดลบเพื่อนเวลาที่ไม่ไวไว้เอง · ข้ามคนโปรด ⭐ กับคนที่ออนไลน์อยู่ · รอบเดียวจบ</div></div>
+              <div class="switch" data-target="fr-clean"></div>
+            </div>
+            <div class="row"><div class="label">ลบเพื่อนตั้งแต่เวลา 1 ถึง <input class="input input-sm" value="40" style="display:inline-block;width:56px;margin:0 4px;"> (สูงสุด 50)</div></div>
+            <div class="note">⚠ ลบถาวร — เพิ่มกลับเองไม่ได้ · ต้องอยู่หน้าล็อบบี้เท่านั้น · เปิดแล้วทำงานทันที ทำเสร็จสวิตช์ปิดเอง แถวไหนอ่านเลขเวลาไม่ออกจะข้าม ไม่ลบมั่ว</div>
+          </div>
+        </div>
+
+        <div class="tsub" id="tsub-heart" style="display:none;">
+          <div class="card">
+            <div class="card-head">
+              <div><div class="card-title">💗 รับหัวใจ &amp; ส่งหัวใจ</div><div class="card-desc">ทำทุกจอที่เลือกไว้ · รอบเดียวจบ — เจอป้าย "รับ-ส่งครบแล้ว" จะปิดสวิตช์ให้เอง</div></div>
+              <div class="switch" data-target="ht-recv"></div>
+            </div>
+            <div class="row"><div class="label"><span class="check on" style="display:inline-flex;margin-right:8px;"></span>เสร็จแล้วต่อด้วย 💝 ส่งหัวใจตามรายชื่อเพื่อน</div></div>
+            <div class="note">⚠ ต้องอยู่หน้าล็อบบี้ หรือหน้าเริ่มเกม เท่านั้น · เปิดแล้วทำงานทันที ไม่ต้องกด Start · ทำเสร็จแล้วสวิตช์จะปิดเอง และปลดล็อกปุ่ม Start ให้อัตโนมัติ</div>
+          </div>
+          <div class="card">
+            <div class="card-head">
+              <div><div class="card-title">💝 ส่งหัวใจตามรายชื่อเพื่อน</div><div class="card-desc">เลื่อนลิสต์เพื่อน (แท็บ Friends) ขึ้นบนสุดให้เองก่อน แล้วไล่กดส่งหัวใจลงมาจนสุดรายชื่อ · ข้ามคนที่ส่งแล้ว (ปุ่มติ๊ก) อัตโนมัติ รอบเดียวจบ · ไม่ต้องเลื่อนลิสต์เตรียมไว้เอง</div></div>
+              <div class="switch" data-target="ht-send"></div>
+            </div>
+            <div class="note">⚠ ต้องอยู่หน้าล็อบบี้เท่านั้น เปิดแล้วทำงานทันที ไม่ต้องกด Start</div>
+          </div>
+        </div>
+
+        <div class="tsub" id="tsub-gift" style="display:none;">
+          <div class="card">
+            <div class="card-head">
+              <div><div class="card-title">🎀 เปิดของขวัญ (Gift Draw)</div><div class="card-desc">สุ่มเปิดกล่องของขวัญอัตโนมัติ — ทำทุกจอที่เลือก เปิดแล้วทำงานทันที</div></div>
+              <div class="switch" data-target="gf-draw"></div>
+            </div>
+            <div class="note">⚠ ต้องอยู่หน้าล็อบบี้ หรือหน้าเริ่มเกม เท่านั้น · เปิดแล้วขอทำงานทันที (ปุ่ม Start จะถูกล็อก จนกว่าจะปิดสวิตช์นี้)</div>
+          </div>
+          <div class="card">
+            <div class="card-head">
+              <div><div class="card-title">🎊 รับรางวัลภารกิจ (Completion)</div><div class="card-desc">เปิดหน้าภารกิจจากล็อบบี้เอง แล้วไล่กด Claim ทุกอันที่ทำเสร็จแล้ว ทั้งแท็บ Episode Tasks และ Common Tasks · มีหน้าไกลับล็อบบี้ให้ · รอบเดียวจบ</div></div>
+              <div class="switch" data-target="gf-quest"></div>
+            </div>
+            <div class="note">⚠ ต้องอยู่หน้าล็อบบี้ เท่านั้น · เปิดแล้วทำงานทันที ไม่ต้องกด Start · กวาครบแล้วสวิตช์ปิดเอง</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===================== BOOST & PLAY ===================== -->
+      <div class="page" id="page-boost">
+        <div class="page-h">บูสต์ &amp; การเล่น</div>
+        <div class="page-sub">เลือกบูสต์ที่จะกดใช้ระหว่างวิ่ง และเปิด/ปิดฟีเจอร์เสริม</div>
+        <div class="tabs" id="boostTabs">
+          <div class="tab active" data-bsub="multi">🪙 บูสต์ (Multi-Buy)</div>
+          <div class="tab" data-bsub="feature">✨ ฟีเจอร์เสริม</div>
+          <div class="tab" data-bsub="jump">⚙ ตั้งค่ากระโดด</div>
+        </div>
+
+        <div class="bsub" id="bsub-multi">
+          <div class="card-head" style="margin-bottom:12px;">
+            <div class="card-desc" style="margin:0;">บูสต์ที่ต้องการ (MULTI-BUY) — คลิกทั้งการ์ดเพื่อเลือก</div>
+            <span class="chip" style="cursor:default;">เลือกแล้ว <span id="boostCount">0</span>/11 ตัว</span>
+          </div>
+          <div class="grid2" id="boostGrid"></div>
+          <div class="note green" style="margin-top:12px;">💚 บอทจะกดซื้อบูสต์ที่เลือกก่อนเริ่มวิ่งทุกรอบ<br><span style="font-weight:400;">เลือกกี่ตัวก็ได้ · จำค่าไว้ให้ข้ามการเปิดโปรแกรม</span></div>
+        </div>
+
+        <div class="bsub" id="bsub-feature" style="display:none;">
+          <div class="page-sub" style="margin-top:-6px;">🍯 หน้าล็อบบี้ (ก่อนกด Play)</div>
+          <div class="card">
+            <div class="card-head">
+              <div><div class="card-title">🎯 เก็บ Relic อัตโนมัติ</div><div class="card-desc">เจอป้าย Get! ที่ล็อบบี้ → เข้าไปสุ่ม Relic ให้ก่อนเริ่มเกม · ปิด = มองข้ามไปเลย กด Play เล่นตามปกติ</div></div>
+              <div class="switch" data-target="ft-relic"></div>
+            </div>
+          </div>
+          <div class="page-sub">✏ บูสต์เข้าเกม (กดใช้ก่อนเริ่มเกม)</div>
+          <div class="grid2" style="grid-template-columns:repeat(3,1fr);">
+            <div class="opt-card"><div class="oc-head"><b>Potion</b><div class="switch"></div></div><p>ตี๊ใช้ HP Potion ทุกรอบ</p></div>
+            <div class="opt-card"><div class="oc-head"><b>Stopwatch</b><div class="switch"></div></div><p>ตี๊ใช้ Stopwatch ทุกรอบ</p></div>
+            <div class="opt-card on"><div class="oc-head"><b>⭐ Star x2</b><div class="switch on"></div></div><p>ตี๊ใช้ Star x2 ทุกรอบ</p></div>
+          </div>
+          <div class="page-sub">🎮 ในเกม (ทำงานระหว่างวิ่ง)</div>
+          <div class="card">
+            <div class="card-head">
+              <div><div class="card-title">⚡ Fast Start</div><div class="card-desc">กดปุ่มพุ่งตัวช่วงเริ่มวิ่งให้อัตโนมัติ</div></div>
+              <div class="switch" data-target="ft-faststart"></div>
+            </div>
+            <div class="field-row" style="width:100%;">
+              <div class="flabel">📷 เห็นไอคอนแล้วรอ <input class="input input-sm" value="0" style="display:inline-block;width:56px;margin:0 4px;"> วินาที ก่อนกด</div>
+            </div>
+            <div class="hint">ตั้ง 0.5 = เจอรูป Fast Start แล้วรอ ~0.5 วิ ค่อยกด (ขอทสุ่มเวลาให้ แกว่งนิดหน่อยทุกรอบ ดูเป็นคน) · 0 = กดทันทีแบบเดิม</div>
+            <div class="row"><div class="label"><span class="check" style="display:inline-flex;margin-right:8px;"></span>🎫 ซื้อเพิ่มให้ทุกรอบ</div><span class="chip" style="cursor:default;">1,600 เหรียญ/รอบ</span></div>
+          </div>
+          <div class="card">
+            <div class="card-head">
+              <div><div class="card-title">🥷 นินจา/ต่อชีพ (Relay)</div><div class="card-desc">คุกกี้ตายแล้วเจอหน้านินจา → กดต่อชีพให้ทันที</div></div>
+              <div class="switch" data-target="ft-relay"></div>
+            </div>
+            <div class="field-row" style="width:100%;">
+              <div class="flabel">📷 เห็นนินจาแล้วรอ <input class="input input-sm" value="0" style="display:inline-block;width:56px;margin:0 4px;"> วินาที ก่อนกด</div>
+            </div>
+            <div class="hint">ตั้ง 0.5 = เจอหน้านินจาแล้วรอ ~0.5 วิ ค่อยกดต่อชีพ (ขอทสุ่มเวลาให้ แกว่งนิดหน่อยทุกรอบ ดูเป็นคน) · 0 = กดทันทีแบบเดิม · สูงสุด 2 วิ (นานกว่านี้หน้านินจาปิดก่อน = เสียชีวิตฟรี)</div>
+          </div>
+        </div>
+
+        <div class="bsub" id="bsub-jump" style="display:none;">
+          <div class="card outline-accent">
+            <div class="card-head">
+              <div><div class="card-title">🎮 เล่นเสมือนมนุษย์ (สุ่มจังหวะ)</div><div class="card-desc">สุ่มการกดทุกครั้ง · ลดโอกาสเจอไม้มินิเกม</div></div>
+              <div class="switch on" data-target="jp-human"></div>
+            </div>
+            <div class="row"><div class="label"><span class="radio" style="display:inline-flex;margin-right:8px;"></span><b>กระโดดเอง</b><span>กระโดด 1 ครั้ง</span></div><input class="input input-sm" value="0.4"> วิ</div>
+            <div class="row"><div class="label"><span class="radio" style="display:inline-flex;margin-right:8px;"></span><b>กระโดดเบิ้ล</b><span>กระโดด 2 ครั้งติด</span></div><input class="input input-sm" value="3.5"> วิ</div>
+            <div class="row"><div class="label" style="padding-left:26px;"><b style="font-weight:400;">↳ เวลาเบิ้ล</b><span>ระยะห่างระหว่าง 2 ครั้ง</span></div><input class="input input-sm" value="0.5"> วิ</div>
+            <div class="row"><div class="label"><span class="switch on" style="display:inline-flex;margin-right:8px;"></span><b>สไลด์เอง</b><span>กดค้างท่าสไลด์ทุกกี่วิ</span></div><input class="input input-sm" value="2.0"> วิ</div>
+            <div class="row"><div class="label" style="padding-left:26px;"><b style="font-weight:400;">↳ ระยะกดค้าง</b><span>สไลด์กดค้างนานเท่าไร</span></div><input class="input input-sm" value="0.5"> วิ</div>
+          </div>
+          <div class="mono-btn primary" style="max-width:200px; margin-left:auto;">✓ บันทึกอัตโนมัติ</div>
+        </div>
+      </div>
+
+      <!-- ===================== GACHA ===================== -->
+      <div class="page" id="page-gacha">
+        <div class="page-h">สมบัติ — สุ่ม &amp; บดเป็นผง</div>
+        <div class="page-sub">สุ่มกล่อง Normal 5,000 เหรียญ และบดชิ้นที่แย่สุดทั้งเป็นผง (Extract)</div>
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <div class="card-title">💎 ระบบสมบัติ</div>
+              <div class="card-desc">ทำทุกจอที่เลือกไว้ · รอบเดียวจบ — ต้องอยู่หน้าล็อบบี้ก่อนเปิด · เสร็จแล้วสวิตช์ปิดเองและกลับสับล็อบบี้ให้</div>
+            </div>
+            <div class="switch" data-target="ga-main"></div>
+          </div>
+          <div class="row"><div class="label"><span class="radio on" style="display:inline-flex;margin-right:8px;"></span>ปิดอยู่</div></div>
+          <div class="hint" style="margin-bottom:8px;">โหมดการทำงาน</div>
+          <div style="display:flex; gap:10px;">
+            <div class="pill-btn on" style="flex:1;">🎁 สุ่มจนเต็ม~บด</div>
+            <div class="pill-btn" style="flex:1;">📈 อัพเกรด +9</div>
+          </div>
+          <div class="row" style="margin-top:6px;">
+            <div class="switch on" style="margin-right:10px;"></div>
+            <div class="label"><b>🔵⭐ กันคุกกี้ชือชีพ + ติดดาวให้</b><span>เปิด = ไม่บด Famous Choco Chip Cookie (คุกกี้กรอบฟ้า แลกแต้มเยลลี่หม) และก่อนบดทุกรอบจะติดดาว ⭐ ให้คุกกี้ที่เจอ · ปิด = บดทำตามปกติ</span></div>
+          </div>
+          <div class="row">
+            <div class="switch on" style="margin-right:10px;"></div>
+            <div class="label"><b>🔵💊 กัน Vita + ติดดาวให้</b><span>เปิด = ไม่บด Vitalizing Vitamin C Capsule (แดปซูเหลือกรอบฟ้า เก็บไว้ Evolve) และก่อนบดทุกรอบจะติดดาว ⭐ ให้เจอ · ปิด = บดทำตามปกติ</span></div>
+          </div>
+          <div class="note green">⭐ เคล็ดลับก่อนเริ่มครั้งแรก — ติดดาว ⭐ ให้สมบัติชิ้นโปรดไว้ก่อน · ชิ้นไหนติดดาว บอทจะแตะเด็ดขาด ที่เหลือปล่อยให้บอทจัดการได้เลย</div>
+        </div>
+      </div>
+
+      <!-- ===================== SETTINGS ===================== -->
+      <div class="page" id="page-settings">
+        <div class="page-h">⚙ ตั้งค่า</div>
+        <div class="page-sub">ค่าที่ใช้ร่วมทั้งโปรแกรม — ไม่ผูกกับจอใดจอหนึ่ง</div>
+
+        <div class="card outline-accent">
+          <div class="card-head">
+            <div>
+              <div class="card-title">🔔 แจ้งเตือนเข้า Discord</div>
+              <div class="card-desc">ส่งข้อความเข้าห้อง Discord ผ่าน Webhook — ดูสถานะบอทจากมือถือได้ ไม่ต้องอยู่หน้าคอม</div>
+            </div>
+            <div class="switch on" data-target="set-discord"></div>
+          </div>
+          <div class="hint" style="margin-bottom:6px;">Webhook URL</div>
+          <div style="display:flex; gap:8px;">
+            <input class="input" value="••••••••••••••••••••••••••••••••••••" style="flex:1;">
+            <div class="mono-btn" style="width:44px;">👁</div>
+            <div class="mono-btn" style="width:44px;">🗑</div>
+            <div class="mono-btn">ทดสอบส่ง</div>
+          </div>
+          <div class="hint">รูปแบบลิงก์ถูกต้อง · ส่งล่าสุด 09:37</div>
+          <div class="hint" style="margin:12px 0 6px;font-weight:600;color:var(--text);">ส่งอะไรบ้าง</div>
+          <div class="row"><span class="check on" style="margin-right:10px;"></span><div class="label">🎬 เหตุด่วน — จอค้าง · จอหลุด · บอทหยุด · License ใกล้หมด</div></div>
+          <div class="row"><span class="check on" style="margin-right:10px;"></span><div class="label">▶ สถานะบอท — เริ่ม/หยุดตามตาราง · จอกลับมา · มีเวอร์ชันใหม่</div></div>
+          <div class="row"><span class="check on" style="margin-right:10px;"></span><div class="label">🍄 เจียบผิดปกติ — บอทรันอยู่แต่ไม่มีตาจบเลย</div></div>
+          <div class="row"><span class="check on" style="margin-right:10px;"></span><div class="label">🟠 จบทุกดาว — เหรียญ + กล่องที่ได้</div></div>
+          <div class="row"><span class="check" style="margin-right:10px;"></span><div class="label">📊 สรุปตามรอบ — แยกรายจอ</div></div>
+
+          <div class="field-row" style="width:100%;flex-direction:column;align-items:flex-start;gap:6px;margin-top:10px;"><div class="flabel"><b>เงียบเกิน</b></div></div>
+          <div class="seg"><div class="seg-btn">10 นาที</div><div class="seg-btn on">15 นาที</div><div class="seg-btn">30 นาที</div><div class="seg-btn">60 นาที</div></div>
+          <div class="field-row" style="width:100%;flex-direction:column;align-items:flex-start;gap:6px;margin-top:10px;"><div class="flabel"><b>สรุปทุก</b></div></div>
+          <div class="seg"><div class="seg-btn on">1 ชม.</div><div class="seg-btn">3 ชม.</div><div class="seg-btn">6 ชม.</div><div class="seg-btn">12 ชม.</div></div>
+          <div class="field-row" style="width:100%;flex-direction:column;align-items:flex-start;gap:6px;margin-top:10px;"><div class="flabel"><b>รวมข้อความ</b></div></div>
+          <div class="seg"><div class="seg-btn on">ส่งทันที</div><div class="seg-btn">30 วินาที</div><div class="seg-btn">60 วินาที</div><div class="seg-btn">120 วินาที</div></div>
+          <div class="field-row" style="width:100%;flex-direction:column;align-items:flex-start;gap:6px;margin-top:10px;"><div class="flabel"><b>แท็กตอนเหตุด่วน</b></div></div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <div class="seg-btn on" style="flex:0 0 auto;padding:9px 16px;">ไม่แท็ก</div>
+            <div class="seg-btn" style="flex:0 0 auto;padding:9px 16px;">@everyone</div>
+            <div class="seg-btn" style="flex:0 0 auto;padding:9px 16px;">แท็กฉัน</div>
+            <input class="input" style="flex:1;min-width:160px;" placeholder="User ID ของคุณ">
+          </div>
+          <div class="note">⚠ Discord จำกัด 30 ข้อความ/นาที ต่อ webhook — หลายจอที่จบดาใกล้กันจะถูกรวมเป็นข้อความเดียวให้เอง</div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div><div class="card-title">↻ เวอร์ชัน &amp; อัพเดท</div><div class="card-desc">เวอร์ชันที่ใช้อยู่ + เช็คของใหม่ได้เอง</div></div>
+          </div>
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-top:8px;">
+            <span class="chip" style="cursor:default;">v1.9.1</span>
+            <div class="mono-btn">↻ เช็คเดี๋ยวนี้</div>
+          </div>
+          <div class="row"><div class="label"><b>เช็คอัพเดทอัตโนมัติ</b><span>เช็คตอนเปิดโปรแกรมและทุก 6 ชม. · เจอของใหม่เดือนให้ (อัพเดทบังคับก่อนสมอปิดสวิตช์)</span></div><div class="switch on" data-target="set-autoupdate"></div></div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div><div class="card-title">🖥 เครื่องนี้</div><div class="card-desc">ค่าที่ไม่ไปกับชุดตั้งค่า — อยู่กับคอมเครื่องนี้เท่านั้น</div></div>
+          </div>
+          <div class="row"><div class="label"><b>กันคอมหลับตอนบอทรัน</b><span>คอมหลับ = บอทหยุดเงียบ ไม่มีใครรู้ · จอยังทับได้ตามปกติ</span></div><div class="switch on" data-target="set-nosleep"></div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ACTIVITY LOG -->
+<div class="logstrip" id="logStrip">
+  <div class="log-head">
+    <div class="lh-left">
+      <span class="lh-title" id="logTitle">ACTIVITY LOG (ซ่อนอยู่)</span>
+      <span class="log-count" id="cntAll">ทั้งหมด 0</span>
+      <span class="log-count ok" id="cntOk">✓ 0</span>
+      <span class="log-count warn" id="cntWarn">▲ 0</span>
+      <span class="log-count err" id="cntErr">✕ 0</span>
+    </div>
+    <div class="actions">
+      <div class="mini-btn" id="btnExpand">⤢ ขยาย</div>
+      <div class="mini-btn" id="btnToggle">แสดง ▾</div>
+      <div class="mini-btn" id="btnClear">Clear</div>
+    </div>
+  </div>
+
+  <div class="log-toolbar">
+    <div class="tb-left">
+      <select class="log-select" id="logDeviceFilter">
+        <option value="all">ทุกจอ</option>
+        <option value="test1">ทดลองจอ 1</option>
+        <option value="test2">ทดลองจอ 2</option>
+        <option value="test3">ทดลองจอ 3</option>
+        <option value="app">app</option>
+      </select>
+      <input class="log-search" id="logSearch" placeholder="🔍 ค้นหาในบรรทัด...">
+    </div>
+    <div class="tb-right">
+      <div class="fs-group">
+        <div class="mini-btn" id="fsMinus">A−</div>
+        <div class="mini-btn" id="fsPlus">A+</div>
+      </div>
+      <div class="mini-btn" id="btnWrap">↵ ตัดบรรทัด</div>
+      <select class="log-select" id="logCap">
+        <option value="500">เพดาน 500</option>
+        <option value="2000" selected>เพดาน 2,000</option>
+        <option value="5000">เพดาน 5,000</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="log-body" id="logBody"></div>
+</div>
+
+<!-- DEVICE MODAL -->
+<div class="modal-bg" id="modalDevice">
+  <div class="modal">
+    <div class="modal-head">
+      <h3>🖥 เลือกอุปกรณ์</h3>
+      <div class="x-btn" data-close="modalDevice">✕</div>
+    </div>
+    <div class="card-desc" style="margin-bottom:12px;">Emulator: 🦊 MuMu Only · เลือกได้เฉพาะ device ประเภทนี้</div>
+    <div class="device-list">
+      <div class="device-row sel" data-dsel="m1"><div class="dcheck"></div><div style="flex:1;"><b>ทดลองจอ 1</b><div class="hint" style="margin:2px 0 0;">127.0.0.1:16384</div></div><span class="device-tag">MuMu</span></div>
+      <div class="device-row sel" data-dsel="m2"><div class="dcheck"></div><div style="flex:1;"><b>ทดลองจอ 2</b><div class="hint" style="margin:2px 0 0;">127.0.0.1:16416</div></div><span class="device-tag">MuMu</span></div>
+      <div class="device-row sel" data-dsel="m3"><div class="dcheck"></div><div style="flex:1;"><b>ทดลองจอ 3</b><div class="hint" style="margin:2px 0 0;">127.0.0.1:16448</div></div><span class="device-tag">MuMu</span></div>
+    </div>
+    <div style="display:flex; gap:8px; margin:14px 0;">
+      <div class="mono-btn" style="flex:1;">Select All</div>
+      <div class="mono-btn" style="flex:1;">Deselect All</div>
+      <div class="mono-btn" style="flex:1;">🔄 Refresh</div>
+    </div>
+    <div style="display:flex; gap:8px; margin-bottom:14px;">
+      <input class="input" placeholder="เพิ่ม device serial เอง เช่น emulator-5554">
+      <div class="mono-btn">เพิ่มเอง</div>
+    </div>
+    <div style="display:flex; gap:8px;">
+      <div class="mono-btn" style="flex:1;" data-close="modalDevice">ยกเลิก</div>
+      <div class="mono-btn primary" style="flex:1;" data-close="modalDevice">✓ ใช้ที่เลือก</div>
+    </div>
+  </div>
+</div>
+
+<!-- THEME MODAL -->
+<div class="modal-bg" id="modalTheme">
+  <div class="modal">
+    <div class="modal-head">
+      <h3>🎨 ธีม &amp; สี</h3>
+      <div class="x-btn" data-close="modalTheme">✕</div>
+    </div>
+    <div class="card-desc" style="margin-bottom:8px;">เลือกสีเน้น · โทนพื้นหลัง · ขนาดตัวหนังสือ — กด "ใช้ธีมนี้" แล้วแอปจะรีเฟรชให้อัตโนมัติ</div>
+
+    <div class="hint" style="margin:14px 0 6px;font-weight:600;color:var(--text);">สีเน้น</div>
+    <div class="swatch-row">
+      <div class="swatch" style="background:#e5484d" data-accent="#e5484d"></div>
+      <div class="swatch" style="background:#3b82f6" data-accent="#3b82f6"></div>
+      <div class="swatch sel" style="background:#1fdd78" data-accent="#1fdd78"></div>
+      <div class="swatch" style="background:#a855f7" data-accent="#a855f7"></div>
+      <div class="swatch" style="background:#f5a524" data-accent="#f5a524"></div>
+      <div class="swatch" style="background:#ec4899" data-accent="#ec4899"></div>
+    </div>
+    <div style="display:flex; gap:8px; margin-bottom:14px;">
+      <div class="mono-btn" style="flex:1;">🎨 เลือกสีเอง...</div>
+      <div class="mono-btn primary" style="flex:1;" id="accentPreviewChip">สีเน้นที่เลือก</div>
+    </div>
+
+    <div class="hint" style="margin:14px 0 6px;font-weight:600;color:var(--text);">โทนพื้นหลัง</div>
+    <div class="grid2">
+      <div class="pill-btn on" data-bg="">🟣 ดำ-แดง (เดิม)</div>
+      <div class="pill-btn" data-bg="bg-slate">⬛ ดำล้วน</div>
+      <div class="pill-btn" data-bg="bg-slate">⬜ เทาเข้ม</div>
+      <div class="pill-btn" data-bg="bg-navy">🔷 น้ำเงินเข้ม</div>
+      <div class="pill-btn" data-bg="bg-plum">🎨 ตามสีเน้น</div>
+    </div>
+
+    <div class="hint" style="margin:16px 0 6px;font-weight:600;color:var(--text);">ขนาดตัวหนังสือ</div>
+    <div class="grid2" style="grid-template-columns:repeat(3,1fr);">
+      <div class="pill-btn" data-fs="13px">เล็ก</div>
+      <div class="pill-btn on" data-fs="14px">กลาง</div>
+      <div class="pill-btn" data-fs="16px">ใหญ่</div>
+    </div>
+
+    <div class="hint" style="margin:16px 0 6px;font-weight:600;color:var(--text);">ตัวอย่าง (เปลี่ยนตามที่เลือก)</div>
+    <div class="card" style="margin-bottom:14px;">
+      <div class="card-head">
+        <div><div class="card-title">● จอ LDPlayer-1 · กำลังทำงาน</div><div class="card-desc">รอบที่ 42 · ▶ เล่นมา 00:31:07 · พักในอีก 00:24:12</div></div>
+      </div>
+      <div class="mono-btn primary" style="max-width:140px;margin-top:10px;">▶ เริ่มบอท</div>
+    </div>
+
+    <div style="display:flex; gap:8px;">
+      <div class="mono-btn" style="flex:1;" data-close="modalTheme">ยกเลิก</div>
+      <div class="mono-btn primary" style="flex:1;" data-close="modalTheme">✓ ใช้ธีมนี้</div>
+    </div>
+  </div>
+</div>
+
+<!-- KEY MODAL -->
+<div class="modal-bg" id="modalKey">
+  <div class="modal">
+    <div class="modal-head">
+      <h3>🔑 คีย์ของฉัน</h3>
+      <div class="x-btn" data-close="modalKey">✕</div>
+    </div>
+    <div class="card outline-accent" style="margin-bottom:14px;">
+      <div class="trial-pill" style="margin-bottom:4px;"><span class="dot"></span> 8 วัน · หมด 13/08/26</div>
+      <div class="hint">หมด 13/08/26</div>
+    </div>
+    <div class="hint" style="margin-bottom:6px;font-weight:600;color:var(--text);">คีย์ของคุณ</div>
+    <div class="key-box" style="margin-bottom:14px;">
+      <input class="input" value="HARU-••••-••••-6VAJ" readonly>
+      <div class="mono-btn">📋 ก็อป</div>
+    </div>
+    <div class="hint" style="margin-bottom:4px;">🖥 ผูกกับเครื่อง: haru · รหัสเครื่อง DFK-33D0-RK</div>
+    <div class="hint" style="margin-bottom:14px;">ย้ายเครื่องได้ 4 ครั้งต่อ 24 ชม. ห่างกันครั้งละ 1 ชม. — เข้าสิทธิ์คงเหลือได้ในดิสคอร์ดร้าน</div>
+    <div class="mono-btn primary" style="margin-bottom:10px;">🖥 ไปใช้เครื่องอื่น</div>
+    <div style="display:flex; gap:8px;">
+      <div class="mono-btn" style="flex:1;">💬 ดิสคอร์ดร้าน</div>
+      <div class="mono-btn" style="flex:1;">🔁 ใช้คีย์ใบใหม่ ▾</div>
+    </div>
+  </div>
+</div>
+
+<div class="disclaimer">
+  ⚠ หน้านี้เป็น <b>Mock UI จำลอง (Static Prototype)</b> จัดทำขึ้นเพื่อใช้ประกอบคู่มือการใช้งานเท่านั้น ไม่ใช่ตัวโปรแกรมจริงและไม่มีการเชื่อมต่อ เกม/อีมูเลเตอร์/เซิร์ฟเวอร์ใดๆ ทั้งสิ้น ปุ่มและสวิตช์ทุกตัวกดได้เพื่อสาธิตหน้าตาการใช้งานเท่านั้น ข้อมูลตัวเลข ชื่อบัญชี และคีย์ในภาพเป็นข้อมูลสมมติทั้งหมด
+</div>
+
+<script>
+// ---------- generic toggle helpers ----------
+document.querySelectorAll('.switch').forEach(el=>{
+  el.addEventListener('click', ()=> el.classList.toggle('on'));
+});
+document.querySelectorAll('.check').forEach(el=>{
+  el.addEventListener('click', ()=> el.classList.toggle('on'));
+});
+document.querySelectorAll('.radio').forEach(el=>{
+  el.addEventListener('click', ()=>{
+    el.closest('.grid2, div')?.querySelectorAll('.radio').forEach(r=>r.classList.remove('on'));
+    el.classList.add('on');
+  });
+});
+
+// segmented buttons (single select within same .seg)
+document.querySelectorAll('.seg').forEach(seg=>{
+  seg.querySelectorAll('.seg-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      seg.querySelectorAll('.seg-btn').forEach(b=>b.classList.remove('on'));
+      btn.classList.add('on');
+    });
+  });
+});
+
+// pill buttons single-select per parent (except boost multi-select handled separately)
+document.querySelectorAll('.pill-btn').forEach(btn=>{
+  if(btn.dataset.bg !== undefined || btn.dataset.fs !== undefined) return; // handled in theme modal
+  btn.addEventListener('click', function(){
+    const siblings = this.parentElement.querySelectorAll('.pill-btn');
+    siblings.forEach(b=>b.classList.remove('on'));
+    this.classList.add('on');
+  });
+});
+
+// opt-card single select within same grid
+document.querySelectorAll('.grid2').forEach(grid=>{
+  const cards = grid.querySelectorAll('.opt-card');
+  cards.forEach(c=>{
+    c.addEventListener('click', (e)=>{
+      if(e.target.classList.contains('switch')) return; // handled separately
+      const isSwitchGrid = c.querySelector('.switch');
+      if(isSwitchGrid){
+        c.classList.toggle('on');
+        c.querySelector('.switch')?.classList.toggle('on');
+      } else {
+        cards.forEach(cc=>{cc.classList.remove('on'); cc.querySelector('.radio')?.classList.remove('on');});
+        c.classList.add('on');
+        c.querySelector('.radio')?.classList.add('on');
+      }
+    });
+  });
+});
+
+// tabs (main horizontal tab groups not for boost/task subs, generic)
+document.querySelectorAll('.tabs').forEach(tabgroup=>{
+  if(tabgroup.id==='taskTabs' || tabgroup.id==='boostTabs') return;
+  tabgroup.querySelectorAll('.tab').forEach(t=>{
+    t.addEventListener('click', ()=>{
+      tabgroup.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+      t.classList.add('active');
+    });
+  });
+});
+
+// ---------- sidebar navigation ----------
+const pages = document.querySelectorAll('.page');
+const navBtns = document.querySelectorAll('.nav-btn');
+function showPage(name){
+  pages.forEach(p=>p.classList.toggle('active', p.id==='page-'+name));
+  navBtns.forEach(b=>{
+    if(b.dataset.modal) return;
+    b.classList.toggle('active', b.dataset.page===name);
+  });
+}
+navBtns.forEach(b=>{
+  b.addEventListener('click', ()=>{
+    if(b.dataset.modal){ openModal(b.dataset.modal); return; }
+    showPage(b.dataset.page);
+  });
+});
+navBtns[0].classList.add('active');
+showPage('overview');
+
+// ---------- deep link support: ?page=devices or ?modal=modalTheme ----------
+(function(){
+  const params = new URLSearchParams(window.location.search);
+  const p = params.get('page');
+  const m = params.get('modal');
+  const validPages = ['overview','devices','tasks','boost','gacha','settings'];
+  if(p && validPages.includes(p)) showPage(p);
+  if(m) setTimeout(()=>openModal(m), 200);
+  const bsub = params.get('bsub');
+  if(bsub){
+    const t = document.querySelector('#boostTabs .tab[data-bsub="'+bsub+'"]');
+    if(t) t.click();
+  }
+  const tsub = params.get('tsub');
+  if(tsub){
+    const t = document.querySelector('#taskTabs .tab[data-tsub="'+tsub+'"]');
+    if(t) t.click();
+  }
+})();
+
+// ---------- task sub tabs ----------
+document.querySelectorAll('#taskTabs .tab').forEach(t=>{
+  t.addEventListener('click', ()=>{
+    document.querySelectorAll('#taskTabs .tab').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    document.querySelectorAll('.tsub').forEach(s=>s.style.display='none');
+    document.getElementById('tsub-'+t.dataset.tsub).style.display='block';
+  });
+});
+
+// ---------- boost sub tabs ----------
+document.querySelectorAll('#boostTabs .tab').forEach(t=>{
+  t.addEventListener('click', ()=>{
+    document.querySelectorAll('#boostTabs .tab').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    document.querySelectorAll('.bsub').forEach(s=>s.style.display='none');
+    document.getElementById('bsub-'+t.dataset.bsub).style.display='block';
+  });
+});
+
+// ---------- boost multi-buy grid ----------
+const boosts = [
+  ['🟡','Double Coins'],['📈','+15% Score Bonus'],['💧','-15% HP Drain'],['❤️','Revive once (80HP)'],
+  ['💥','70% Crush Chance'],['🪽','+17% Base Speed'],['✨','Gold Coin Magic'],['🔵','-30% Collision Dmg'],
+  ['🧪','+20% HP from Potion'],['🎧','Magnetic Aura'],['🌀','2 Pit Lifts']
+];
+const boostGrid = document.getElementById('boostGrid');
+boosts.forEach(([icon,label])=>{
+  const d = document.createElement('div');
+  d.className='opt-card';
+  d.innerHTML = `<div class="oc-head"><b>${icon} ${label}</b><div class="check"></div></div>`;
+  d.addEventListener('click', ()=>{
+    d.classList.toggle('on');
+    d.querySelector('.check').classList.toggle('on');
+    document.getElementById('boostCount').textContent = boostGrid.querySelectorAll('.opt-card.on').length;
+  });
+  boostGrid.appendChild(d);
+});
+
+// ---------- device rows (multi-select) ----------
+document.querySelectorAll('.device-row').forEach(r=>{
+  r.addEventListener('click', ()=> r.classList.toggle('sel'));
+});
+
+// ---------- stop / play button ----------
+const stopBtn = document.getElementById('stopBtn');
+const statusPill = document.getElementById('statusPill');
+let playing = true;
+stopBtn.addEventListener('click', ()=>{
+  playing = !playing;
+  stopBtn.classList.toggle('playing', !playing);
+  document.getElementById('stopIcon').textContent = playing ? '⏹' : '▶';
+  document.getElementById('stopLabel').textContent = playing ? 'Stop bot' : 'เล่นต่อ';
+  statusPill.classList.toggle('stopped', !playing);
+  statusPill.innerHTML = playing
+    ? '<span class="dot"></span> Running · <span id="runCount">1</span> จอ'
+    : '<span class="dot"></span> หยุดชั่วคราว · เก็บสถิติ';
+});
+
+// ---------- modals ----------
+function openModal(id){ document.getElementById(id).classList.add('show'); }
+function closeModal(id){ document.getElementById(id).classList.remove('show'); }
+document.getElementById('openDeviceModal').addEventListener('click', ()=>openModal('modalDevice'));
+document.querySelectorAll('[data-close]').forEach(el=>{
+  el.addEventListener('click', ()=>closeModal(el.dataset.close));
+});
+document.querySelectorAll('.modal-bg').forEach(bg=>{
+  bg.addEventListener('click', (e)=>{ if(e.target===bg) bg.classList.remove('show'); });
+});
+
+// ---------- theme modal: accent swatches ----------
+document.querySelectorAll('.swatch').forEach(sw=>{
+  sw.addEventListener('click', ()=>{
+    document.querySelectorAll('.swatch').forEach(s=>s.classList.remove('sel'));
+    sw.classList.add('sel');
+    const c = sw.dataset.accent;
+    document.documentElement.style.setProperty('--accent', c);
+    document.documentElement.style.setProperty('--accent-dim', c+'20');
+    document.documentElement.style.setProperty('--accent-dim2', c+'38');
+  });
+});
+
+// ---------- theme modal: background pick ----------
+document.querySelectorAll('[data-bg]').forEach(btn=>{
+  btn.addEventListener('click', function(){
+    document.querySelectorAll('[data-bg]').forEach(b=>b.classList.remove('on'));
+    this.classList.add('on');
+    document.body.className = this.dataset.bg;
+  });
+});
+
+// ---------- theme modal: font size ----------
+document.querySelectorAll('[data-fs]').forEach(btn=>{
+  btn.addEventListener('click', function(){
+    document.querySelectorAll('[data-fs]').forEach(b=>b.classList.remove('on'));
+    this.classList.add('on');
+    document.documentElement.style.setProperty('--font-size-base', this.dataset.fs);
+  });
+});
+
+// ================= ACTIVITY LOG =================
+(function(){
+  const devices = ['test1','test2','test3'];
+  const okMsgs = ['จบรอบที่ {n}','บูสต์ตรงตามที่ตั้งไว้','Loop {n} completed (รวมทุกจอ: {n2})','เก็บกล่องสำเร็จ 1 ใบ','ส่งหัวใจสำเร็จ 12 คน','เชื่อมต่ออุปกรณ์สำเร็จ','เข้าสู่ล็อบบี้แล้ว'];
+  const warnMsgs = ['เจอไอคอนล่าช้ากว่าปกติ ~1.2 วิ','ตรวจพบป๊อปอัพไม่รู้จัก ข้ามไปก่อน','การเชื่อมต่อช้า รอเพิ่ม 3 วิ','จอไม่ตอบสนองชั่วคราว กำลังลองใหม่'];
+  const errMsgs = ['unknown','Connection lost — กำลังรีเกม','ไม่พบอุปกรณ์ ตัดการเชื่อมต่อ','หมดเวลาเชื่อมต่อ (timeout)'];
+  const errPrefixes = ['emulator-5554','emulator-5556','emulator-5558','127.0.0.1:16384','127.0.0.1:16416','127.0.0.1:16448'];
+
+  function pad(n){return n<10?'0'+n:''+n;}
+  function randTime(base){
+    const d = new Date(base.getTime() - Math.floor(Math.random()*4)*1000);
+    return pad(d.getHours())+':'+pad(d.getMinutes())+':'+pad(d.getSeconds());
+  }
+
+  // seed a realistic mixed log, oldest -> newest (top -> bottom)
+  const logData = [];
+  const now = new Date();
+  let t = new Date(now.getTime() - 60000);
+  for(let i=0;i<48;i++){
+    t = new Date(t.getTime() + Math.floor(Math.random()*4000)+500);
+    const roll = Math.random();
+    if(roll < 0.66){
+      const dev = devices[Math.floor(Math.random()*devices.length)];
+      const n = Math.floor(Math.random()*30)+1;
+      const msg = okMsgs[Math.floor(Math.random()*okMsgs.length)].replace('{n}',n).replace('{n2}', n+Math.floor(Math.random()*20));
+      logData.push({time:randTime(t), dev:dev==='app'?'app':dev, type:'ok', msg});
+    } else if(roll < 0.8){
+      const dev = devices[Math.floor(Math.random()*devices.length)];
+      const msg = warnMsgs[Math.floor(Math.random()*warnMsgs.length)];
+      logData.push({time:randTime(t), dev, type:'warn', msg});
+    } else {
+      const pfx = errPrefixes[Math.floor(Math.random()*errPrefixes.length)];
+      const msg = errMsgs[Math.floor(Math.random()*errMsgs.length)];
+      logData.push({time:randTime(t), dev:'bot', type:'err', msg: pfx+' → '+msg});
+    }
+  }
+
+  const icons = {ok:'✔', warn:'▲', err:'✕'};
+
+  function render(){
+    const filterDev = document.getElementById('logDeviceFilter').value;
+    const q = document.getElementById('logSearch').value.trim().toLowerCase();
+    const cap = parseInt(document.getElementById('logCap').value, 10);
+    let rows = logData.slice(-cap);
+    if(filterDev !== 'all') rows = rows.filter(r => r.dev === filterDev);
+    if(q) rows = rows.filter(r => (r.dev+' '+r.msg).toLowerCase().includes(q));
+
+    const body = document.getElementById('logBody');
+    if(rows.length === 0){
+      body.innerHTML = '<div class="log-empty">ไม่พบบรรทัดที่ตรงกับตัวกรอง</div>';
+    } else {
+      body.innerHTML = rows.map(r =>
+        `<div class="log-line ${r.type}"><span class="t">${r.time}</span><span class="dev">[${r.dev}]</span><span class="ic">${icons[r.type]}</span><span class="msg">${r.msg}</span></div>`
+      ).join('');
+      body.scrollTop = body.scrollHeight;
+    }
+
+    const all = logData.length;
+    const ok = logData.filter(r=>r.type==='ok').length;
+    const warn = logData.filter(r=>r.type==='warn').length;
+    const err = logData.filter(r=>r.type==='err').length;
+    document.getElementById('cntAll').textContent = 'ทั้งหมด ' + all.toLocaleString('en-US');
+    document.getElementById('cntOk').textContent = '✓ ' + ok.toLocaleString('en-US');
+    document.getElementById('cntWarn').textContent = '▲ ' + warn.toLocaleString('en-US');
+    document.getElementById('cntErr').textContent = '✕ ' + err.toLocaleString('en-US');
+  }
+
+  const strip = document.getElementById('logStrip');
+  const title = document.getElementById('logTitle');
+  const btnToggle = document.getElementById('btnToggle');
+  const btnExpand = document.getElementById('btnExpand');
+  let state = 'hidden'; // hidden | shown | expanded
+
+  function applyState(){
+    strip.classList.remove('shown','expanded');
+    if(state === 'hidden'){
+      title.textContent = 'ACTIVITY LOG (ซ่อนอยู่)';
+      btnToggle.innerHTML = 'แสดง ▾';
+      btnExpand.innerHTML = '⤢ ขยาย';
+    } else if(state === 'shown'){
+      strip.classList.add('shown');
+      title.textContent = 'ACTIVITY LOG';
+      btnToggle.innerHTML = 'ซ่อน ▾';
+      btnExpand.innerHTML = '⤢ ขยาย';
+      render();
+    } else {
+      strip.classList.add('expanded');
+      title.textContent = 'ACTIVITY LOG';
+      btnToggle.innerHTML = 'ซ่อน ▾';
+      btnExpand.innerHTML = '↘ คืน';
+      render();
+    }
+  }
+
+  btnToggle.addEventListener('click', ()=>{
+    state = (state === 'hidden') ? 'shown' : 'hidden';
+    applyState();
+  });
+  btnExpand.addEventListener('click', ()=>{
+    state = (state === 'expanded') ? 'shown' : 'expanded';
+    applyState();
+  });
+  document.getElementById('btnClear').addEventListener('click', (e)=>{
+    e.stopPropagation();
+    logData.length = 0;
+    render();
+  });
+
+  document.getElementById('logDeviceFilter').addEventListener('change', render);
+  document.getElementById('logSearch').addEventListener('input', render);
+  document.getElementById('logCap').addEventListener('change', render);
+
+  let fsPx = 12;
+  document.getElementById('fsPlus').addEventListener('click', ()=>{
+    fsPx = Math.min(16, fsPx+1);
+    document.documentElement.style.setProperty('--logfs', fsPx+'px');
+  });
+  document.getElementById('fsMinus').addEventListener('click', ()=>{
+    fsPx = Math.max(10, fsPx-1);
+    document.documentElement.style.setProperty('--logfs', fsPx+'px');
+  });
+  const wrapBtn = document.getElementById('btnWrap');
+  const logBody = document.getElementById('logBody');
+  wrapBtn.addEventListener('click', ()=>{
+    logBody.classList.toggle('wrap');
+    wrapBtn.classList.toggle('active');
+  });
+
+  applyState();
+
+  // deep-link: ?log=shown or ?log=expanded
+  const lp = new URLSearchParams(window.location.search).get('log');
+  if(lp === 'shown' || lp === 'expanded'){ state = lp; applyState(); }
+})();
+
+// language chip toggle (cosmetic demo only)
+document.getElementById('langChip').addEventListener('click', function(){
+  this.textContent = this.textContent.includes('EN') ? '🌐 TH' : '🌐 EN';
+});
+</script>
+</body>
+</html>
